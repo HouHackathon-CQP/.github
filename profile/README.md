@@ -86,7 +86,7 @@ Chúng tôi là những sinh viên công nghệ, code bằng đam mê và mang t
         <img src="https://avatars.githubusercontent.com/u/125746822?v=4" width="120px;" style="border-radius: 50%"/><br>
         <sub><b>Trần Anh Quân</b></sub>
       </a><br>
-      <small><i>Mobile Lead & AI Engineer</i></small>
+      <small><i>Team Lead</i></small>
     </td>
     <td align="center">
       <a href="https://github.com/ChienTran16">
