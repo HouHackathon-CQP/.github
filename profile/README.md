@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.png" alt="GreenMap Logo" width="160" />
+  <img src="logo.png" alt="GreenMap Logo" width="160" />
   <h1>🌿 GreenMap Hanoi</h1>
   <h3>Đánh thức "Màu Xanh" trong lòng Hà Nội</h3>
   
