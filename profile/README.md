@@ -123,5 +123,5 @@ Nếu bạn là:
 ---
 <div align="center">
   <h3>Code for Hanoi. Code for Life. 🌿</h3>
-  <sub>© 2024 GreenMap Hanoi Project. Made with ❤️ and lots of ☕ in Hanoi.</sub>
+  <sub>© 2025 GreenMap Hanoi Project. Made with ❤️ and lots of ☕ in Hanoi.</sub>
 </div>
