@@ -16,9 +16,9 @@
 
 ![GreenMap Banner](https://img.shields.io/badge/🌿_GreenMap_Hanoi-Breathing_Life_into_the_Capital-2ea44f?style=for-the-badge)
 
-# Nền Tảng Bản Đồ Xanh Thông Minh
+# Smart Green Map Platform
 
-> **"Công nghệ kết nối cộng đồng vì một Hà Nội trong lành"**
+> **"Technology connecting communities for a cleaner Hanoi"**
 
 [![Web](https://img.shields.io/badge/Web-React_19-61DAFB?style=flat-square&logo=react)](https://github.com/HouHackathon-CQP/GreenMap-Frontend)
 [![Mobile](https://img.shields.io/badge/Mobile-Kotlin-7F52FF?style=flat-square&logo=kotlin)](https://github.com/HouHackathon-CQP/GreenMap-Mobile-App)
@@ -26,46 +26,46 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-success?style=flat-square)](https://github.com/HouHackathon-CQP)
 
-**Language:** **[VI]** | [EN](README_EN.md)
+**Language:** [VI](README.md) | **[EN]**
 
 ---
 
-### 🎯 Sứ Mệnh
+### 🎯 Mission
 
-**Minh bạch hóa** môi trường đô thị | **Định hướng** lối sống xanh | **Kết nối** sức mạnh cộng đồng
+**Transparency** in urban environment | **Direction** for green living | **Connection** of community power
 
 </div>
 
 ---
 
-## 💡 Về Dự Án
+## 💡 About The Project
 
-**GreenMap Hanoi** không chỉ là một ứng dụng bản đồ - đây là hệ sinh thái công nghệ kết hợp AI, IoT và dữ liệu mở để giải quyết bài toán ô nhiễm môi trường tại Hà Nội.
+**GreenMap Hanoi** is not just a mapping application - it's a technology ecosystem combining AI, IoT, and open data to solve environmental pollution challenges in Hanoi.
 
-### 🌍 Bối Cảnh & Vấn Đề
+### 🌍 Background & Problem
 
-Hà Nội - thủ đô ngàn năm văn hiến đang đối mặt với thách thức lớn về chất lượng không khí và môi trường sống:
+Hanoi - the thousand-year-old capital is facing significant challenges in air quality and living environment:
 
-- 🏭 **Ô nhiễm không khí:** Chỉ số AQI thường xuyên ở mức "Nguy hại" với PM2.5 vượt chuẩn WHO 5-10 lần
-- 🚗 **Giao thông ùn tắc:** Lượng phương tiện tăng 15-20%/năm, phát thải khí CO2 gia tăng
-- 🌳 **Thiếu không gian xanh:** Tỷ lệ cây xanh/người thấp hơn nhiều so với các thành phố châu Á
-- 📊 **Thiếu dữ liệu minh bạch:** Thông tin môi trường phân tán, khó tiếp cận với người dân
+- 🏭 **Air pollution:** AQI frequently at "Hazardous" levels with PM2.5 exceeding WHO standards by 5-10 times
+- 🚗 **Traffic congestion:** Vehicle numbers increasing 15-20%/year, rising CO2 emissions
+- 🌳 **Lack of green spaces:** Trees-per-capita ratio much lower than other Asian cities
+- 📊 **Lack of transparent data:** Environmental information scattered, difficult for citizens to access
 
-### ✨ Giải Pháp Của Chúng Tôi
+### ✨ Our Solution
 
-GreenMap cung cấp một nền tảng tích hợp toàn diện với 3 trụ cột chính:
+GreenMap provides a comprehensive integrated platform with 3 main pillars:
 
-| 🔍 **Giám Sát Real-time** | 🌱 **Hạ Tầng Xanh** | 👥 **Cộng Đồng Tham Gia** |
+| 🔍 **Real-time Monitoring** | 🌱 **Green Infrastructure** | 👥 **Community Participation** |
 |:---:|:---:|:---:|
-| Theo dõi AQI, thời tiết, giao thông theo từng khu vực | Bản đồ công viên, trạm sạc EV, xe đạp, du lịch | Báo cáo điểm nóng, chia sẻ thông tin môi trường |
+| Track AQI, weather, traffic by area | Map of parks, EV stations, bikes, tourism | Report hotspots, share environmental info |
 
 ---
 
-## 🏗️ Kiến Trúc Hệ Thống
+## 🏗️ System Architecture
 
-### Thiết Kế Phân Tầng
+### Hybrid Microservices Design
 
-GreenMap được xây dựng theo mô hình **Hybrid Architecture** kết hợp giữa xử lý tĩnh và luồng dữ liệu thời gian thực:
+GreenMap is built on a **Hybrid Architecture** model combining static processing and real-time data streaming:
 
 ```mermaid
 graph TB
@@ -120,44 +120,44 @@ graph TB
     style C2 fill:#FF5722,stroke:#E64A19,stroke-width:2px,color:#fff
 ```
 
-### 🔑 Điểm Độc Đáo
+### 🔑 Unique Features
 
 #### 1️⃣ **Dual Storage Strategy**
 
-- **PostgreSQL + PostGIS**: Lưu trữ dữ liệu tĩnh (users, locations, reports) với khả năng truy vấn địa lý mạnh mẽ
-- **MongoDB via Orion-LD**: Xử lý luồng dữ liệu động (AQI, weather, traffic) theo chuẩn NGSI-LD quốc tế
+- **PostgreSQL + PostGIS**: Store static data (users, locations, reports) with powerful geospatial queries
+- **MongoDB via Orion-LD**: Handle dynamic data streams (AQI, weather, traffic) following international NGSI-LD standard
 
 #### 2️⃣ **NGSI-LD Context Broker**
 
-Tích hợp **FIWARE Orion-LD** - chuẩn mực toàn cầu cho Smart Cities, cho phép:
-- 🔌 Plug-and-play với IoT sensors
-- 🌐 Interoperability với các hệ thống thông minh khác
+Integration with **FIWARE Orion-LD** - global standard for Smart Cities, enabling:
+- 🔌 Plug-and-play with IoT sensors
+- 🌐 Interoperability with other smart systems
 - ⚡ Real-time data streaming
 - 📡 Subscription-based notifications
 
 #### 3️⃣ **Background Processing**
 
-Workers tự động cập nhật dữ liệu:
-- 🌫️ AQI Agent: Mỗi 30 phút
-- 🌤️ Weather Agent: Mỗi 15 phút
-- 🔄 Auto-sync với Orion-LD Broker
+Workers automatically update data:
+- 🌫️ AQI Agent: Every 30 minutes
+- 🌤️ Weather Agent: Every 15 minutes
+- 🔄 Auto-sync with Orion-LD Broker
 
 #### 4️⃣ **AI-Powered Insights**
 
-Phân tích thông minh với Google Gemini và Groq:
-- 🤖 **Multi-Provider AI**: Tự động chuyển đổi giữa Gemini và Groq khi cần
-- 🌤️ **Weather & AQI Analysis**: Phân tích dữ liệu thời tiết 24h/7 ngày kết hợp chất lượng không khí
-- 💡 **Actionable Recommendations**: Đưa ra lời khuyên, dự báo cho việc ra ngoài, vận động, mang theo vật dụng
-- 📊 **Context-Aware**: Lưu trữ context phân tích để tham khảo lại sau
-- 🇻🇳 **Vietnamese Language**: Phân tích hoàn toàn bằng tiếng Việt, dễ hiểu và hành động
+Smart analysis with Google Gemini and Groq:
+- 🤖 **Multi-Provider AI**: Automatic fallback between Gemini and Groq
+- 🌤️ **Weather & AQI Analysis**: Analyze 24h/7-day weather data combined with air quality
+- 💡 **Actionable Recommendations**: Suggest outdoor schedules, exercise, items to bring
+- 📊 **Context-Aware**: Store analysis context for future reference
+- 🇻🇳 **Vietnamese Language**: Full analysis in Vietnamese, easy to understand and act on
 
 ---
 
-## 📦 Cấu Trúc Dự Án
+## 📦 Project Structure
 
 <div align="center">
 
-### 🔗 4 Repository Chính
+### 🔗 4 Main Repositories
 
 </div>
 
@@ -168,7 +168,7 @@ Phân tích thông minh với Google Gemini và Groq:
 <tr>
 <td width="60%">
 
-**Kiến Trúc:**
+**Architecture:**
 ```
 ⚙️ FastAPI REST API Server
 ├─ PostgreSQL + PostGIS (Spatial data)
@@ -177,7 +177,7 @@ Phân tích thông minh với Google Gemini và Groq:
 └─ Background Workers (AQI/Weather sync)
 ```
 
-**Chức Năng Chính:**
+**Main Features:**
 - 🔐 User management & JWT auth
 - 📍 Location CRUD (parks, EV stations, bikes)
 - 📢 Community report workflow
@@ -220,7 +220,7 @@ Phân tích thông minh với Google Gemini và Groq:
 <tr>
 <td width="60%">
 
-**Kiến Trúc:**
+**Architecture:**
 ```
 💻 React 19 + TypeScript
 ├─ MapLibre GL JS (3D Interactive Maps)
@@ -229,7 +229,7 @@ Phân tích thông minh với Google Gemini và Groq:
 └─ React Router v7 (Client-side routing)
 ```
 
-**Chức Năng Chính:**
+**Main Features:**
 - 🗺️ 7-layer interactive map (AQI, Traffic, Parks, EV, etc.)
 - 📊 Real-time KPI dashboard
 - ✅ Report approval system
@@ -265,7 +265,7 @@ Phân tích thông minh với Google Gemini và Groq:
 <tr>
 <td width="60%">
 
-**Kiến Trúc:**
+**Architecture:**
 ```
 📲 Android Native App
 ├─ Kotlin + Jetpack Compose
@@ -275,7 +275,7 @@ Phân tích thông minh với Google Gemini và Groq:
 └─ Room + DataStore (Local storage)
 ```
 
-**Chức Năng Chính:**
+**Main Features:**
 - 🌫️ Real-time AQI by GPS location
 - 🌤️ Weather forecast 24h
 - 🚗 Traffic density monitoring
@@ -311,7 +311,7 @@ Phân tích thông minh với Google Gemini và Groq:
 <tr>
 <td width="60%">
 
-**Kiến Trúc:**
+**Architecture:**
 ```
 🗄️ Data Collection & Processing
 ├─ Jupyter Notebooks (Analysis)
@@ -350,47 +350,48 @@ Phân tích thông minh với Google Gemini và Groq:
 
 ---
 
-## ⚡ Tính Năng Chính
+## ⚡ Key Features
 
 <div align="center">
 
-### 🎯 Cho Người Dùng Cuối (Mobile App)
+### 🎯 For End Users (Mobile App)
 
 </div>
 
-| Tính Năng     | Mô Tả     |
-|:--------------|:----------|
-| 🌫️ **AQI Real-time** | Theo dõi chất lượng không khí (PM2.5, PM10, NO2, O3) theo vị trí GPS |
-| 🌤️ **Dự Báo Thời Tiết** | Nhiệt độ, độ ẩm, lượng mưa, gió - cập nhật 15 phút/lần |
-| 🤖 **AI Insights** | Phân tích thời tiết & AQI bằng AI (Gemini/Groq), đưa ra lời khuyên cá nhân hóa |
-| 🚗 **Traffic Monitor** | Mật độ giao thông real-time từ SUMO simulation |
-| ⚡ **EV Charging** | Tìm trạm sạc xe điện gần nhất + trạng thái available |
-| 🚴 **Bike Sharing** | Vị trí điểm thuê xe đạp công cộng |
-| 🏞️ **Điểm Xanh** | Công viên, khu du lịch, điểm check-in xanh |
-| 📢 **Community Report** | Báo cáo điểm ô nhiễm + upload ảnh hiện trường |
-| 📰 **Tin Tức Xanh** | RSS feed từ báo Hà Nội Mới về môi trường |
+| Feature     | Description     |
+|:------------|:----------------|
+| 🌫️ **AQI Real-time** | Track air quality (PM2.5, PM10, NO2, O3) by GPS location |
+| 🌤️ **Weather Forecast** | Temperature, humidity, rainfall, wind - updated every 15 mins |
+| 🤖 **AI Insights** | Weather & AQI analysis with AI (Gemini/Groq), personalized recommendations |
+| 🚗 **Traffic Monitor** | Real-time traffic density from SUMO simulation |
+| ⚡ **EV Charging** | Find nearest EV charging stations + availability status |
+| 🚴 **Bike Sharing** | Public bike rental point locations |
+| 🏞️ **Green Points** | Parks, tourism spots, green check-in points |
+| 📢 **Community Report** | Report pollution hotspots + upload on-site photos |
+| 📰 **Green News** | RSS feed from Hanoi Moi newspaper on environment |
 
 <div align="center">
 
-### 💼 Cho Quản Trị Viên (Web Dashboard)
+### 💼 For Administrators (Web Dashboard)
 
 </div>
 
-| Tính Năng | Mô Tả |
-|:----------|:------|
-| 📊 **KPI Dashboard** | Overview tổng quan: sensors, users, reports, alerts |
-| 🗺️ **Multi-layer Map** | 7 lớp: AQI, Weather, Traffic, EV, Bike, Park, Report |
-| 📈 **Analytics** | Biểu đồ AQI theo quận, so sánh trends, heatmap |
-| 🤖 **AI Analytics** | Xem lịch sử phân tích AI, context data, và insights |
-| ✅ **Report Management** | Duyệt/từ chối báo cáo từ cộng đồng |
-| 👥 **User Management** | CRUD users, phân quyền ADMIN/CITIZEN |
-| 🌳 **Green Infrastructure** | CRUD công viên, trạm sạc EV, điểm thuê xe đạp, du lịch |
+| Feature | Description |
+|:--------|:------------|
+| 📊 **KPI Dashboard** | Overview: sensors, users, reports, alerts |
+| 🗺️ **Multi-layer Map** | 7 layers: AQI, Weather, Traffic, EV, Bike, Park, Report |
+| 📈 **Analytics** | AQI charts by district, trend comparison, heatmaps |
+| 🤖 **AI Analytics** | View AI analysis history, context data, and insights |
+| ✅ **Report Management** | Approve/reject community reports |
+| 👥 **User Management** | CRUD users, role assignment ADMIN/CITIZEN |
+| 🌳 **Green Infrastructure** | CRUD parks, EV stations, bike rentals, tourism |
+| 📥 **Export Data** | Export CSV/PDF reports for research |
 
 ---
 
-## 📊 Dữ Liệu & Data Pipeline
+## 📊 Data & Data Pipeline
 
-### 🔌 Nguồn Dữ Liệu
+### 🔌 Data Sources
 
 ```mermaid
 graph LR
@@ -419,10 +420,10 @@ graph LR
 
 <table>
 <tr>
-<th width="20%">Nguồn</th>
-<th width="30%">Loại Dữ Liệu</th>
-<th width="25%">Phương Thức</th>
-<th width="25%">Tần Suất</th>
+<th width="20%">Source</th>
+<th width="30%">Data Type</th>
+<th width="25%">Method</th>
+<th width="25%">Frequency</th>
 </tr>
 
 <tr>
@@ -455,7 +456,7 @@ graph LR
 
 <tr>
 <td><b>RSS News</b></td>
-<td>📰 Environmental News<br/>Hà Nội Mới</td>
+<td>📰 Environmental News<br/>Hanoi Moi</td>
 <td>RSS Parser</td>
 <td>🔄 Hourly</td>
 </tr>
@@ -507,26 +508,11 @@ graph LR
   ├─ REST API (GET /api/locations, /api/aqi)
   ├─ NGSI-LD API (GET /ngsi-ld/v1/entities)
   └─ GeoJSON Endpoints (/geojson/parks)
-  ↓
-🔌 API Layer (FastAPI)
-  ├─ REST API (CRUD operations)
-  └─ NGSI-LD API (Real-time queries)
-  ↓
-🖥️ Visualization
-  ├─ Admin Portal (React + MapLibre)
-  └─ Mobile App (Kotlin + Compose)
 ```
-
-### 📋 Chi tiết Quy trình:
-1. **Thu thập**: GeoJSON từ OSM qua Overpass API, AQI từ OpenAQ API (auto-refresh mỗi 30 phút), Weather từ Weather API (auto-refresh mỗi 15 phút)
-2. **Xử lý**: Jupyter Notebook (`data_collection.ipynb`), Python scripts (`merge_json.py`, `split_json.py`), Validation (geometry checks, attribute normalization)
-3. **Lưu trữ**: Static data → PostgreSQL/PostGIS, Real-time IoT → Orion-LD → MongoDB, Files → `static/` folder
-4. **Đồng bộ**: Background workers (`aqi_agent.py`, `weather_agent.py`), Sync script (`sync_to_orion.py`), Init scripts (`init_db.py`, `seed_sensor.py`)
-5. **Truy xuất**: REST API (JSON response với Pydantic schemas), NGSI-LD queries (với header `Accept: application/ld+json`), GeoJSON endpoints cho bản đồ
 
 ---
 
-## 🛠️ Tech Stack Chi Tiết
+## 🛠️ Detailed Tech Stack
 
 <details>
 <summary><b>🔧 Backend Technologies</b></summary>
@@ -661,139 +647,32 @@ SUMO                  # Traffic simulation
 
 ---
 
-## 🚀 Bắt Đầu Nhanh
+## 🤝 Contributing
 
-### 📋 Yêu Cầu Hệ Thống
-- **Docker Desktop** (bắt buộc cho backend)
-- **Node.js** 18+ (cho frontend)
-- **Python** 3.10+ (cho backend và data processing)
-- **Android Studio** Hedgehog+ (cho mobile)
-- **Git**
+We welcome all contributions from the community!
 
-### 💿 Cài Đặt Toàn Hệ Thống
+### 📝 How to Contribute
+1. **Fork** the repository you want to contribute to
+2. Create a **feature branch**: `git checkout -b feature/NewFeature`
+3. **Commit** your changes: `git commit -m 'feat: Add XYZ feature'`
+4. **Push** to branch: `git push origin feature/NewFeature`
+5. Create a **Pull Request**
 
-#### 1️⃣ Clone Repositories
-```bash
-# Clone tất cả repos
-git clone https://github.com/HouHackathon-CQP/GreenMap-Backend.git
-git clone https://github.com/HouHackathon-CQP/GreenMap-Frontend.git
-git clone https://github.com/HouHackathon-CQP/GreenMap-Data.git
-git clone https://github.com/HouHackathon-CQP/GreenMap-Mobile-App.git
-```
-
-#### 2️⃣ Backend Setup (FastAPI + Orion-LD)
-```bash
-cd GreenMap-Backend
-
-# Tạo virtual environment
-python -m venv .venv
-.\.venv\Scripts\activate  # Windows
-# source .venv/bin/activate  # macOS/Linux
-
-# Cài đặt dependencies
-pip install -r requirements.txt
-
-# Tạo file .env
-copy env.example .env
-# Chỉnh sửa .env với thông tin của bạn
-
-# Khởi động Docker containers (PostgreSQL + MongoDB + Orion-LD)
-docker-compose up -d
-
-# Đợi 10-15 giây cho containers khởi động
-timeout /t 15  # Windows
-# sleep 15  # macOS/Linux
-
-# Khởi tạo database và dữ liệu mẫu
-python setup_project.py
-
-# Chạy backend
-python main.py
-# Server chạy tại: http://localhost:8000
-# API docs: http://localhost:8000/docs
-# Orion-LD: http://localhost:1026
-```
-
-**Ports sử dụng:**
-- `8000`: FastAPI Backend
-- `5432`: PostgreSQL
-- `27017`: MongoDB
-- `1026`: Orion-LD Context Broker
-
-#### 3️⃣ Frontend Setup (React + Vite)
-```bash
-cd GreenMap-Frontend
-
-# Cài đặt dependencies
-npm install
-
-# Chạy dev server
-npm run dev
-# Ứng dụng chạy tại: http://localhost:5173
-```
-
-**Tài khoản admin mặc định:**
-- Email: `admin@greenmap.hanoi`
-- Password: `123456`
-
-#### 4️⃣ Data Processing (Python Notebooks)
-```bash
-cd GreenMap-Data
-
-# Tạo virtual environment
-python -m venv .venv
-.\.venv\Scripts\activate
-
-# Cài đặt dependencies
-pip install jupyter geopandas pandas shapely
-
-# Khởi động Jupyter
-jupyter notebook
-# Mở file: data_collection.ipynb
-```
-
-#### 5️⃣ Mobile App Setup (Android)
-```bash
-cd GreenMap-Mobile-App
-
-# Tạo local.properties
-echo "sdk.dir=C:\\Users\\YourName\\AppData\\Local\\Android\\sdk" > local.properties
-echo "MAPTILER_API_KEY=your_maptiler_key_here" >> local.properties
-echo "API_BASE_URL=http://10.0.2.2:8000/" >> local.properties
-
-# Build với Android Studio hoặc CLI
-./gradlew assembleDebug
-./gradlew installDebug
-```
-
----
-
-## 🤝 Đóng Góp
-
-Chúng tôi hoan nghênh mọi đóng góp từ cộng đồng!
-
-### 📝 Cách Đóng Góp
-1. **Fork** repository bạn muốn đóng góp
-2. Tạo **feature branch**: `git checkout -b feature/TinhNangMoi`
-3. **Commit** thay đổi: `git commit -m 'feat: Thêm tính năng XYZ'`
-4. **Push** lên branch: `git push origin feature/TinhNangMoi`
-5. Tạo **Pull Request**
-
-### 💬 Quy Tắc Commit
-Sử dụng [Conventional Commits](https://www.conventionalcommits.org/):
-- `feat:` - Tính năng mới
-- `fix:` - Sửa lỗi
-- `docs:` - Thay đổi documentation
+### 💬 Commit Convention
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
 - `style:` - Formatting, missing semi colons, etc
 - `refactor:` - Code refactoring
-- `test:` - Thêm tests
-- `chore:` - Maintain
+- `test:` - Adding tests
+- `chore:` - Maintenance
 
 ---
 
-## 📄 Giấy Phép
+## 📄 License
 
-Dự án này được cấp phép theo **Apache License 2.0** - xem file [LICENSE](https://github.com/HouHackathon-CQP/GreenMap-Backend/blob/main/LICENSE) để biết chi tiết.
+This project is licensed under **Apache License 2.0** - see the [LICENSE](https://github.com/HouHackathon-CQP/GreenMap-Backend/blob/main/LICENSE) file for details.
 
 ```
 Copyright 2025 HouHackathon-CQP
@@ -813,11 +692,11 @@ limitations under the License.
 
 ---
 
-## 🔗 Liên Kết Quan Trọng
+## 🔗 Important Links
 
 - **🐛 Issues**: [GitHub Issues](https://github.com/HouHackathon-CQP/GreenMap-Backend/issues)
 - **💬 Discussions**: [GitHub Discussions](https://github.com/HouHackathon-CQP/GreenMap-Backend/discussions)
-- **📖 API Docs**: `http://localhost:8000/docs` (khi chạy backend)
+- **📖 API Docs**: `http://localhost:8000/docs` (when running backend)
 
 ### 📦 Repositories
 - [GreenMap-Backend](https://github.com/HouHackathon-CQP/GreenMap-Backend)
@@ -827,63 +706,61 @@ limitations under the License.
 
 ---
 
-## 📧 Liên Hệ
+## 📧 Contact
 
-**Nhóm Phát Triển:** HouHackathon-CQP
+**Development Team:** HouHackathon-CQP
 
-**Địa chỉ:**
-- 96 Định Công, Hà Nội, Việt Nam
-- Nhà B101, phố Nguyễn Hiền, phường Bạch Mai, TP Hà Nội
-- Trường Đại học Mở Hà Nội - Khoa Công nghệ thông tin (FITHOU)
+**Address:**
+- 96 Dinh Cong, Hanoi, Vietnam
+- Building B101, Nguyen Hien Street, Bach Mai Ward, Hanoi City
+- Hanoi Open University (HOU) - Faculty of Information Technology (FITHOU)
 
-**Email:** thocodeanhquan@gmail.com
+**Email:** houhackathon.cqp@gmail.com
 
 **GitHub Organization:** [@HouHackathon-CQP](https://github.com/HouHackathon-CQP)
 
 ---
 
-## 🙏 Ghi Nhận
+## 🙏 Acknowledgments
 
-Dự án này sử dụng dữ liệu và công nghệ từ:
+This project uses data and technology from:
 
-- **OpenStreetMap** contributors - Dữ liệu bản đồ mở
+- **OpenStreetMap** contributors - Open map data
 - **FIWARE Foundation** - Orion-LD Context Broker
-- **OpenAQ** - Dữ liệu chất lượng không khí
-- **Smart Data Models** - NGSI-LD context và schemas
+- **OpenAQ** - Air quality data
+- **Smart Data Models** - NGSI-LD context and schemas
 - **MapLibre** - Open-source mapping library
 - **SUMO** (Simulation of Urban MObility) - Traffic simulation
-- **Báo Hà Nội Mới** - RSS news feed
-- **Google Gemini** - AI analysis và insights
-- **Groq** - AI analysis và insights (fallback)
-
-
+- **Hanoi Moi Newspaper** - RSS news feed
+- **Google Gemini** - AI analysis and insights
+- **Groq** - AI analysis and insights (fallback)
 
 ---
 
-## 👥 Đội ngũ phát triển
+## 👥 Development Team
 
-Chúng tôi là những sinh viên công nghệ, code bằng đam mê và mang trong mình tình yêu lớn với Hà Nội.
+We are technology students, coding with passion and a deep love for Hanoi.
 
 <table>
   <tr>
     <td align="center">
       <a href="https://github.com/kedokato-dev">
         <img src="https://avatars.githubusercontent.com/u/125746822?v=4" width="120px;" style="border-radius: 50%"/><br>
-        <sub><b>Trần Anh Quân</b></sub>
+        <sub><b>Tran Anh Quan</b></sub>
       </a><br>
       <small><i>Team Lead</i></small>
     </td>
     <td align="center">
       <a href="https://github.com/blueMonkey23">
         <img src="https://avatars.githubusercontent.com/u/168514215?v=4" width="120px;" style="border-radius: 50%"/><br>
-        <sub><b>Trần Trọng Chiến</b></sub>
+        <sub><b>Tran Trong Chien</b></sub>
       </a><br>
       <small><i>Backend Specialist & System Architect</i></small>
     </td>
     <td align="center">
       <a href="https://github.com/ourstorycomic">
         <img src="https://avatars.githubusercontent.com/u/100331812?v=4" width="120px;" style="border-radius: 50%"/><br>
-        <sub><b>Nguyễn Hà Phương</b></sub>
+        <sub><b>Nguyen Ha Phuong</b></sub>
       </a><br>
       <small><i>Frontend Developer & Data Viz</i></small>
     </td>
@@ -892,18 +769,18 @@ Chúng tôi là những sinh viên công nghệ, code bằng đam mê và mang t
 
 ---
 
-## 💌 Lời mời hợp tác
+## 💌 Collaboration Invitation
 
-GreenMap là một dự án **Mã nguồn mở (Open Source)** và hướng tới **Dữ liệu mở (Open Data)**. Chúng tôi không thể làm điều này một mình.
+GreenMap is an **Open Source** project aimed at **Open Data**. We can't do this alone.
 
-Nếu bạn là:
-* **Mobile Dev:** Hãy giúp chúng tôi tối ưu hiệu năng App Kotlin, làm cho nó mượt mà hơn trên các dòng máy phổ thông.
-* **Data Scientist:** Model AI của chúng tôi cần thông minh hơn. Nếu bạn có ý tưởng về thuật toán dự báo mới, hãy Pull Request!
-* **Cơ quan/Tổ chức:** Nếu bạn có dữ liệu quan trắc (Sở TNMT, WHO, AirVisual...), hãy chia sẻ API để chúng tôi tích hợp.
+If you are:
+* **Mobile Dev:** Help us optimize Kotlin App performance for smooth operation on mainstream devices.
+* **Data Scientist:** Our AI models need improvement. If you have ideas for new prediction algorithms, please Pull Request!
+* **Agencies/Organizations:** If you have monitoring data (DoNRE, WHO, AirVisual...), please share APIs for integration.
 
-Đừng ngần ngại mở một **Issue** để góp ý hoặc gửi **Pull Request**. Mỗi dòng code của bạn đều góp phần làm không khí Hà Nội trong lành hơn.
+Don't hesitate to open an **Issue** for feedback or send a **Pull Request**. Every line of your code contributes to cleaner air in Hanoi.
 
-*Vui lòng đọc kỹ file `CONTRIBUTING.md` trong từng repository con để bắt đầu nhé!*
+*Please read the `CONTRIBUTING.md` file in each sub-repository to get started!*
 
 ---
 
@@ -913,10 +790,10 @@ Nếu bạn là:
 
 *© 2025 GreenMap Hanoi Project. Made with ❤️ and lots of ☕ in Hanoi.*
 
-**GreenMap** - Hệ Sinh Thái Bản Đồ Xanh Thông Minh  
-Phát triển bởi **Nhóm HouHackathon-CQP**  
-Trường Đại học Mở Hà Nội (HOU)
+**GreenMap** - Smart Green Map Ecosystem  
+Developed by **HouHackathon-CQP Team**  
+Hanoi Open University (HOU)
 
-🌱 *Vì một Hà Nội xanh hơn, sạch hơn, thông minh hơn* 🌱
+🌱 *For a greener, cleaner, smarter Hanoi* 🌱
 
 </div>
