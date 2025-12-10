@@ -1,3 +1,17 @@
+<!-- /*Copyright 2025 HouHackathon-CQP
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. */ -->
+
 <div align="center">
 
 ![GreenMap Banner](https://img.shields.io/badge/🌿_GreenMap_Hanoi-Breathing_Life_into_the_Capital-2ea44f?style=for-the-badge)
@@ -39,15 +53,15 @@ Hà Nội - thủ đô ngàn năm văn hiến đang đối mặt với thách th
 
 GreenMap cung cấp một nền tảng tích hợp toàn diện với 3 trụ cột chính:
 
-| 🔍 **Giám Sát Real-time** | 🗺️ **Điều Hướng Thông Minh** | 👥 **Cộng Đồng Tham Gia** |
+| 🔍 **Giám Sát Real-time** | 🌱 **Hạ Tầng Xanh** | 👥 **Cộng Đồng Tham Gia** |
 |:---:|:---:|:---:|
-| Theo dõi AQI, thời tiết, giao thông theo từng khu vực | Gợi ý tuyến đường xanh, ít ô nhiễm nhất | Báo cáo điểm nóng, tích điểm gamification |
+| Theo dõi AQI, thời tiết, giao thông theo từng khu vực | Bản đồ công viên, trạm sạc EV, xe đạp, du lịch | Báo cáo điểm nóng, chia sẻ thông tin môi trường |
 
 ---
 
 ## 🏗️ Kiến Trúc Hệ Thống
 
-### Thiết Kế Microservices Phân Tầng
+### Thiết Kế Phân Tầng
 
 GreenMap được xây dựng theo mô hình **Hybrid Architecture** kết hợp giữa xử lý tĩnh và luồng dữ liệu thời gian thực:
 
@@ -64,6 +78,7 @@ graph TB
         B1[FastAPI Server<br/>REST API Endpoints]
         B2[Orion-LD Broker<br/>NGSI-LD Context]
         B3[Background Workers<br/>AQI & Weather Agents]
+        B4[🤖 AI Engine<br/>Gemini & Groq]
     end
     
     subgraph "💾 Data Storage Layer"
@@ -82,22 +97,25 @@ graph TB
     B1 -->|Store Static Data| D1
     B2 -->|Store Dynamic Data| D2
     D1 & D2 -->|Query Data| B1
+    D1 & D2 -->|Weather + AQI Data| B4
+    B4 -->|AI Insights| B1
     B1 -->|JSON API| C1 & C2
     
-    style A1 fill:#FF6B6B,stroke:#C92A2A,stroke-width:2px,color:#fff
-    style A2 fill:#FF8787,stroke:#C92A2A,stroke-width:2px,color:#fff
-    style A3 fill:#FFA8A8,stroke:#C92A2A,stroke-width:2px,color:#fff
-    style A4 fill:#FFC9C9,stroke:#C92A2A,stroke-width:2px,color:#fff
+    style A1 fill:#E74C3C,stroke:#C0392B,stroke-width:2px,color:#fff
+    style A2 fill:#E67E22,stroke:#D35400,stroke-width:2px,color:#fff
+    style A3 fill:#F39C12,stroke:#E67E22,stroke-width:2px,color:#fff
+    style A4 fill:#3498DB,stroke:#2980B9,stroke-width:2px,color:#fff
     
-    style B1 fill:#4ECDC4,stroke:#0B7285,stroke-width:2px,color:#fff
-    style B2 fill:#63E6E2,stroke:#0B7285,stroke-width:2px,color:#fff
-    style B3 fill:#96F2ED,stroke:#0B7285,stroke-width:2px,color:#fff
+    style B1 fill:#1ABC9C,stroke:#16A085,stroke-width:2px,color:#fff
+    style B2 fill:#2ECC71,stroke:#27AE60,stroke-width:2px,color:#fff
+    style B3 fill:#3498DB,stroke:#2980B9,stroke-width:2px,color:#fff
+    style B4 fill:#FF6B6B,stroke:#EE5A52,stroke-width:2px,color:#fff
     
-    style D1 fill:#96CEB4,stroke:#2B8A3E,stroke-width:2px,color:#fff
-    style D2 fill:#B2F2BB,stroke:#2B8A3E,stroke-width:2px,color:#fff
+    style D1 fill:#9B59B6,stroke:#8E44AD,stroke-width:2px,color:#fff
+    style D2 fill:#8E44AD,stroke:#7D3C98,stroke-width:2px,color:#fff
     
-    style C1 fill:#748FFC,stroke:#364FC7,stroke-width:2px,color:#fff
-    style C2 fill:#91A7FF,stroke:#364FC7,stroke-width:2px,color:#fff
+    style C1 fill:#E91E63,stroke:#C2185B,stroke-width:2px,color:#fff
+    style C2 fill:#FF5722,stroke:#E64A19,stroke-width:2px,color:#fff
 ```
 
 ### 🔑 Điểm Độc Đáo
@@ -122,120 +140,207 @@ Workers tự động cập nhật dữ liệu:
 - 🌤️ Weather Agent: Mỗi 15 phút
 - 🔄 Auto-sync với Orion-LD Broker
 
+#### 4️⃣ **AI-Powered Insights**
+
+Phân tích thông minh với Google Gemini và Groq:
+- 🤖 **Multi-Provider AI**: Tự động chuyển đổi giữa Gemini và Groq khi cần
+- 🌤️ **Weather & AQI Analysis**: Phân tích dữ liệu thời tiết 24h/7 ngày kết hợp chất lượng không khí
+- 💡 **Actionable Recommendations**: Đưa ra lời khuyên, dự báo cho việc ra ngoài, vận động, mang theo vật dụng
+- 📊 **Context-Aware**: Lưu trữ context phân tích để tham khảo lại sau
+- 🇻🇳 **Vietnamese Language**: Phân tích hoàn toàn bằng tiếng Việt, dễ hiểu và hành động
+
 ---
 
 ## 📦 Cấu Trúc Dự Án
 
-### Monorepo Organization
+<div align="center">
+
+### 🔗 4 Repository Chính
+
+</div>
+
+#### 🔧 Backend Services
+> **[GreenMap-Backend](https://github.com/HouHackathon-CQP/GreenMap-Backend)** - Core API & Data Processing
 
 <table>
 <tr>
-<td width="50%">
+<td width="60%">
 
-#### 🔧 Backend Services
-
-**[GreenMap-Backend](https://github.com/HouHackathon-CQP/GreenMap-Backend)**
-
+**Kiến Trúc:**
 ```
-⚙️ Core API Server
-├─ FastAPI + SQLAlchemy
-├─ JWT Authentication
-├─ CRUD Operations
-└─ Background Workers
+⚙️ FastAPI REST API Server
+├─ PostgreSQL + PostGIS (Spatial data)
+├─ MongoDB + Orion-LD (IoT/NGSI-LD)
+├─ JWT Authentication & Authorization
+└─ Background Workers (AQI/Weather sync)
 ```
 
-**Tech Stack:**
-- ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
-- ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)
-- ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
-- ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
-
-**Features:**
-- ✅ RESTful API Endpoints
-- ✅ Orion-LD Integration
-- ✅ Auto AQI/Weather Updates
-- ✅ User & Report Management
+**Chức Năng Chính:**
+- 🔐 User management & JWT auth
+- 📍 Location CRUD (parks, EV stations, bikes)
+- 📢 Community report workflow
+- 🌫️ Real-time AQI/Weather sync (15-30 min)
+- 🔄 Orion-LD Context Broker integration
+- 🤖 AI weather/AQI insights (Gemini + Groq)
+- 📊 AI analysis history & context storage
 
 </td>
-<td width="50%">
-
-#### 🎨 Frontend Applications
-
-**[GreenMap-Frontend](https://github.com/HouHackathon-CQP/GreenMap-Frontend)**
-
-```
-💻 Admin Dashboard
-├─ React 19 + TypeScript
-├─ MapLibre GL JS
-├─ Recharts Analytics
-└─ TailwindCSS
-```
+<td width="40%">
 
 **Tech Stack:**
-- ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
-- ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-- ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
-- ![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?logo=tailwind-css&logoColor=white)
 
-**Features:**
-- ✅ 7 Interactive Map Layers
-- ✅ Real-time KPI Dashboard
-- ✅ Report Management System
-- ✅ Analytics & Charts
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white&style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white&style=flat-square)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white&style=flat-square)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white&style=flat-square)
+![Python](https://img.shields.io/badge/Python_3.10+-3776AB?logo=python&logoColor=white&style=flat-square)
+![Gemini](https://img.shields.io/badge/Gemini_AI-8E75B2?logo=google&logoColor=white&style=flat-square)
+![Groq](https://img.shields.io/badge/Groq_AI-FF6B35?logo=ai&logoColor=white&style=flat-square)
+
+**Status:** ✅ Production Ready
+
+**API Endpoints:** 27+
+
+**Auto-sync:** Every 15-30 min
+
+**AI Providers:** Gemini & Groq
 
 </td>
 </tr>
+</table>
+
+---
+
+#### 🎨 Frontend Applications
+> **[GreenMap-Frontend](https://github.com/HouHackathon-CQP/GreenMap-Frontend)** - Admin Dashboard & Analytics
+
+<table>
 <tr>
-<td width="50%">
+<td width="60%">
 
-#### 📱 Mobile Platform
-
-**[GreenMap-Mobile-App](https://github.com/HouHackathon-CQP/GreenMap-Mobile-App)**
-
+**Kiến Trúc:**
 ```
-📲 Citizen App
-├─ Kotlin + Jetpack Compose
-├─ MVI Architecture
-├─ MapLibre SDK
-└─ Hilt DI
+💻 React 19 + TypeScript
+├─ MapLibre GL JS (3D Interactive Maps)
+├─ Recharts (Data Visualization)
+├─ TailwindCSS + Tailwind Animate
+└─ React Router v7 (Client-side routing)
 ```
 
-**Tech Stack:**
-- ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
-- ![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)
-- ![Jetpack](https://img.shields.io/badge/Jetpack-4285F4?logo=android&logoColor=white)
-
-**Features:**
-- ✅ Real-time AQI Monitoring
-- ✅ Green Route Suggestions
-- ✅ Community Reporting
-- ✅ Gamification System
+**Chức Năng Chính:**
+- 🗺️ 7-layer interactive map (AQI, Traffic, Parks, EV, etc.)
+- 📊 Real-time KPI dashboard
+- ✅ Report approval system
+- 👥 User management (ADMIN/CITIZEN roles)
+- 📈 Analytics & trends visualization
 
 </td>
-<td width="50%">
-
-#### 📊 Data Repository
-
-**[GreenMap-Data](https://github.com/HouHackathon-CQP/GreenMap-Data)**
-
-```
-🗄️ Open Data Hub
-├─ GeoJSON Datasets
-├─ Jupyter Notebooks
-├─ SUMO Simulations
-└─ OSM Extracts
-```
+<td width="40%">
 
 **Tech Stack:**
-- ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
-- ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)
-- ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
+
+![React](https://img.shields.io/badge/React_19-61DAFB?logo=react&logoColor=black&style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=flat-square)
+![Vite](https://img.shields.io/badge/Vite_7.2-646CFF?logo=vite&logoColor=white&style=flat-square)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white&style=flat-square)
+
+**Status:** ✅ Production Ready
+
+**Map Layers:** 7
+
+**Charts:** 5+ types
+
+</td>
+</tr>
+</table>
+
+---
+
+#### 📱 Mobile Platform
+> **[GreenMap-Mobile-App](https://github.com/HouHackathon-CQP/GreenMap-Mobile-App)** - Citizen Mobile App
+
+<table>
+<tr>
+<td width="60%">
+
+**Kiến Trúc:**
+```
+📲 Android Native App
+├─ Kotlin + Jetpack Compose
+├─ MVI Architecture Pattern
+├─ MapLibre SDK (Offline maps)
+├─ Hilt (Dependency Injection)
+└─ Room + DataStore (Local storage)
+```
+
+**Chức Năng Chính:**
+- 🌫️ Real-time AQI by GPS location
+- 🌤️ Weather forecast 24h
+- 🚗 Traffic density monitoring
+- 🌳 Green infrastructure map (parks, EV, bikes)
+- 📢 Community pollution reporting
+
+</td>
+<td width="40%">
+
+**Tech Stack:**
+
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white&style=flat-square)
+![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white&style=flat-square)
+![Jetpack](https://img.shields.io/badge/Jetpack_Compose-4285F4?logo=android&logoColor=white&style=flat-square)
+![MapLibre](https://img.shields.io/badge/MapLibre-396CB2?logo=mapbox&logoColor=white&style=flat-square)
+
+**Status:** 🚧 Active Development
+
+**Min SDK:** Android 7.0 (API 24)
+
+**Features:** 10+
+
+</td>
+</tr>
+</table>
+
+---
+
+#### 📊 Data Repository
+> **[GreenMap-Data](https://github.com/HouHackathon-CQP/GreenMap-Data)** - Open Dataset & Processing
+
+<table>
+<tr>
+<td width="60%">
+
+**Kiến Trúc:**
+```
+🗄️ Data Collection & Processing
+├─ Jupyter Notebooks (Analysis)
+├─ GeoJSON Datasets (500+ POIs)
+├─ SUMO Traffic Simulation
+└─ Python Scripts (ETL pipelines)
+```
 
 **Datasets:**
-- ✅ 500+ POIs from OSM
-- ✅ Traffic Simulation Data
-- ✅ Air Quality Historical
-- ✅ Weather Archives
+- 🏞️ Parks & green spaces (200+)
+- ⚡ EV charging stations (100+)
+- 🚴 Bike rental points (50+)
+- 🏛️ Tourist attractions (150+)
+- 🚗 Traffic simulation data (SUMO)
+- 📊 Historical AQI/Weather data
+
+</td>
+<td width="40%">
+
+**Tech Stack:**
+
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=flat-square)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white&style=flat-square)
+![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white&style=flat-square)
+![GeoPandas](https://img.shields.io/badge/GeoPandas-139C5A?logo=python&logoColor=white&style=flat-square)
+
+**Status:** ✅ Open Data
+
+**Total POIs:** 500+
+
+**Format:** GeoJSON, JSON
 
 </td>
 </tr>
@@ -251,18 +356,17 @@ Workers tự động cập nhật dữ liệu:
 
 </div>
 
-| Tính Năng | Mô Tả | Status |
-|:----------|:------|:------:|
-| 🌫️ **AQI Real-time** | Theo dõi chất lượng không khí (PM2.5, PM10, NO2, O3) theo vị trí GPS | ✅ |
-| 🌤️ **Dự Báo Thời Tiết** | Nhiệt độ, độ ẩm, lượng mưa, gió - cập nhật 15 phút/lần | ✅ |
-| 🗺️ **Green Routes** | Gợi ý tuyến đường ít ô nhiễm, nhiều cây xanh nhất | 🚧 |
-| 🚗 **Traffic Monitor** | Mật độ giao thông real-time từ SUMO simulation | ✅ |
-| ⚡ **EV Charging** | Tìm trạm sạc xe điện gần nhất + trạng thái available | ✅ |
-| 🚴 **Bike Sharing** | Vị trí điểm thuê xe đạp công cộng | ✅ |
-| 🏞️ **Điểm Xanh** | Công viên, khu du lịch, điểm check-in xanh | ✅ |
-| 📢 **Community Report** | Báo cáo điểm ô nhiễm + upload ảnh hiện trường | ✅ |
-| 🏆 **Gamification** | Tích điểm "Hiệp sĩ xanh", leaderboard, badges | 🚧 |
-| 📰 **Tin Tức Xanh** | RSS feed từ báo Hà Nội Mới về môi trường | ✅ |
+| Tính Năng     | Mô Tả     |
+|:--------------|:----------|
+| 🌫️ **AQI Real-time** | Theo dõi chất lượng không khí (PM2.5, PM10, NO2, O3) theo vị trí GPS |
+| 🌤️ **Dự Báo Thời Tiết** | Nhiệt độ, độ ẩm, lượng mưa, gió - cập nhật 15 phút/lần |
+| 🤖 **AI Insights** | Phân tích thời tiết & AQI bằng AI (Gemini/Groq), đưa ra lời khuyên cá nhân hóa |
+| 🚗 **Traffic Monitor** | Mật độ giao thông real-time từ SUMO simulation |
+| ⚡ **EV Charging** | Tìm trạm sạc xe điện gần nhất + trạng thái available |
+| 🚴 **Bike Sharing** | Vị trí điểm thuê xe đạp công cộng |
+| 🏞️ **Điểm Xanh** | Công viên, khu du lịch, điểm check-in xanh |
+| 📢 **Community Report** | Báo cáo điểm ô nhiễm + upload ảnh hiện trường |
+| 📰 **Tin Tức Xanh** | RSS feed từ báo Hà Nội Mới về môi trường |
 
 <div align="center">
 
@@ -270,22 +374,15 @@ Workers tự động cập nhật dữ liệu:
 
 </div>
 
-| Tính Năng | Mô Tả | Status |
-|:----------|:------|:------:|
-| 📊 **KPI Dashboard** | Overview tổng quan: sensors, users, reports, alerts | ✅ |
-| 🗺️ **Multi-layer Map** | 7 lớp: AQI, Weather, Traffic, EV, Bike, Park, Report | ✅ |
-| 📈 **Analytics** | Biểu đồ AQI theo quận, so sánh trends, heatmap | ✅ |
-| ✅ **Report Management** | Duyệt/từ chối báo cáo từ cộng đồng | ✅ |
-| 👥 **User Management** | CRUD users, phân quyền ADMIN/CITIZEN | ✅ |
-| 🔔 **Notification Center** | Push alerts cho AQI nguy hiểm | 🚧 |
-| 📥 **Export Data** | Export CSV/PDF reports cho nghiên cứu | 🚧 |
-| ⚙️ **System Monitor** | Database health, API response time, uptime | 🚧 |
-
-<div align="center">
-
-**Chú thích:** ✅ Hoàn thành | 🚧 Đang phát triển | 📋 Kế hoạch
-
-</div>
+| Tính Năng | Mô Tả |
+|:----------|:------|
+| 📊 **KPI Dashboard** | Overview tổng quan: sensors, users, reports, alerts |
+| 🗺️ **Multi-layer Map** | 7 lớp: AQI, Weather, Traffic, EV, Bike, Park, Report |
+| 📈 **Analytics** | Biểu đồ AQI theo quận, so sánh trends, heatmap |
+| 🤖 **AI Analytics** | Xem lịch sử phân tích AI, context data, và insights |
+| ✅ **Report Management** | Duyệt/từ chối báo cáo từ cộng đồng |
+| 👥 **User Management** | CRUD users, phân quyền ADMIN/CITIZEN |
+| 🌳 **Green Infrastructure** | CRUD công viên, trạm sạc EV, điểm thuê xe đạp, du lịch |
 
 ---
 
@@ -408,31 +505,14 @@ graph LR
   ├─ REST API (GET /api/locations, /api/aqi)
   ├─ NGSI-LD API (GET /ngsi-ld/v1/entities)
   └─ GeoJSON Endpoints (/geojson/parks)
-```
-| **SUMO** | Mô phỏng giao thông đô thị | Simulation Output (JSON) | PostgreSQL |
-| **RSS Feed** | Tin tức môi trường từ Báo Hà Nội Mới | RSS Parser | PostgreSQL |
-| **User Reports** | Báo cáo từ cộng đồng (ảnh, GPS, mô tả) | Mobile/Web App | PostgreSQL + Static |
-
-### ⚙️ Quy Trình Xử Lý Dữ liệu
-
-```
-📡 Thu thập (OSM/OpenAQ/Weather)
-    ↓
-🐍 Xử lý (Python/Jupyter)
-    ↓
-🔄 Chuẩn hóa (GeoJSON/NGSI-LD)
-    ↓
-💾 Lưu trữ
-    ├─ PostgreSQL + PostGIS (Static: locations, users, reports)
-    └─ Orion-LD + MongoDB (Dynamic: AQI, weather, traffic)
-    ↓
+  ↓
 🔌 API Layer (FastAPI)
-    ├─ REST API (CRUD operations)
-    └─ NGSI-LD API (Real-time queries)
-    ↓
+  ├─ REST API (CRUD operations)
+  └─ NGSI-LD API (Real-time queries)
+  ↓
 🖥️ Visualization
-    ├─ Admin Portal (React + MapLibre)
-    └─ Mobile App (Kotlin + Compose)
+  ├─ Admin Portal (React + MapLibre)
+  └─ Mobile App (Kotlin + Compose)
 ```
 
 ### 📋 Chi tiết Quy trình:
@@ -468,6 +548,13 @@ MongoDB 5.0           # Document store for NGSI-LD
 ```
 Orion-LD 1.6.1        # Context Broker (NGSI-LD)
 Smart Data Models     # Standard entity schemas
+```
+
+### AI & Machine Learning
+```python
+Google Gemini API     # AI analysis (primary)
+Groq API              # AI analysis (fallback)
+httpx                 # Async API calls
 ```
 
 ### Libraries
@@ -679,167 +766,6 @@ echo "API_BASE_URL=http://10.0.2.2:8000/" >> local.properties
 
 ---
 
-## 🗺️ Development Roadmap
-
-```mermaid
-gantt
-    title GreenMap Development Timeline
-    dateFormat YYYY-MM
-    section Phase 1
-    Core Backend           :done, 2024-10, 2024-11
-    Admin Dashboard        :done, 2024-11, 2024-12
-    Mobile App Prototype   :done, 2024-12, 2025-01
-    
-    section Phase 2
-    Real-time Updates      :active, 2025-01, 2025-02
-    Gamification           :active, 2025-02, 2025-03
-    Advanced Analytics     : 2025-03, 2025-04
-    
-    section Phase 3
-    AI Prediction          : 2025-04, 2025-06
-    IoT Integration        : 2025-06, 2025-08
-    GraphQL API            : 2025-08, 2025-09
-```
-
-### ✅ Phase 1: Foundation (Completed)
-
-<table>
-<tr>
-<td width="50%">
-
-**Backend Infrastructure**
-- [x] FastAPI REST API
-- [x] PostgreSQL + PostGIS setup
-- [x] Orion-LD integration
-- [x] JWT Authentication
-- [x] CRUD operations
-- [x] Background workers (AQI/Weather)
-
-</td>
-<td width="50%">
-
-**Frontend & Mobile**
-- [x] React Admin Portal
-- [x] 7-layer interactive map
-- [x] User management system
-- [x] Report approval workflow
-- [x] Kotlin mobile app
-- [x] Basic UI/UX
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Data Pipeline**
-- [x] OSM data collection
-- [x] OpenAQ integration
-- [x] Weather API sync
-- [x] SUMO traffic simulation
-- [x] RSS news aggregation
-
-</td>
-<td width="50%">
-
-**DevOps**
-- [x] Docker containerization
-- [x] Docker Compose orchestration
-- [x] Environment config
-- [x] Database migrations
-
-</td>
-</tr>
-</table>
-
-### 🚧 Phase 2: Enhancement (In Progress)
-
-| Feature | Status | ETA | Priority |
-|:--------|:------:|:---:|:--------:|
-| 🔌 WebSocket real-time updates | 🟡 In Progress | Q1 2025 | 🔴 High |
-| 🔔 Push notifications (FCM) | 🟡 Planning | Q1 2025 | 🔴 High |
-| 🎮 Gamification system | 🟡 In Progress | Q1 2025 | 🟠 Medium |
-| 📊 Advanced analytics dashboard | 🟢 Not Started | Q2 2025 | 🟠 Medium |
-| 🌐 Multi-language (EN/VI) | 🟢 Not Started | Q2 2025 | 🟡 Low |
-| 📱 Offline-first mobile | 🟢 Not Started | Q2 2025 | 🟠 Medium |
-
-### 🔮 Phase 3: Innovation (Planned)
-
-<details>
-<summary><b>AI & Machine Learning</b></summary>
-
-- [ ] **AQI Prediction Model**
-  - Time-series forecasting (LSTM/Prophet)
-  - 24h-48h advance prediction
-  - Accuracy target: 85%+
-
-- [ ] **Route Optimization**
-  - Multi-objective routing (distance + AQI + traffic)
-  - A* algorithm with custom heuristics
-  - Integration with Google Maps API
-
-- [ ] **Anomaly Detection**
-  - Detect sudden AQI spikes
-  - Auto-alert system
-  - Pattern recognition
-
-</details>
-
-<details>
-<summary><b>Community & Social</b></summary>
-
-- [ ] **Social Features**
-  - User profiles & achievements
-  - Follow/friend system
-  - Share reports on social media
-  - Comment & like system
-
-- [ ] **Leaderboard**
-  - Top contributors
-  - Weekly/monthly rankings
-  - Reward system
-
-- [ ] **Challenges & Events**
-  - "Green Week" campaigns
-  - Community clean-up events
-  - Carbon offset challenges
-
-</details>
-
-<details>
-<summary><b>Advanced Integrations</b></summary>
-
-- [ ] **Public Transport API**
-  - Bus/metro real-time tracking
-  - Carbon footprint comparison
-  - Green commute suggestions
-
-- [ ] **IoT Sensor Network**
-  - Community-deployed sensors
-  - Arduino/ESP32 integration
-  - Crowdsourced data validation
-
-- [ ] **Government APIs**
-  - Traffic violation data
-  - Construction permits
-  - Environmental reports
-
-- [ ] **GraphQL API**
-  - Flexible queries
-  - Better mobile performance
-  - Schema introspection
-
-</details>
-
-### 🏆 Long-term Vision
-
-> **2026 Goal:** Expand GreenMap to 3 more major Vietnamese cities (Da Nang, Ho Chi Minh, Hue)
-
-> **2027 Goal:** Open API marketplace for third-party developers, 10,000+ active users
-
-> **2030 Goal:** Become the leading environmental data platform in Southeast Asia
-
----
-
 ## 🤝 Đóng Góp
 
 Chúng tôi hoan nghênh mọi đóng góp từ cộng đồng!
@@ -908,7 +834,7 @@ limitations under the License.
 - Nhà B101, phố Nguyễn Hiền, phường Bạch Mai, TP Hà Nội
 - Trường Đại học Mở Hà Nội - Khoa Công nghệ thông tin (FITHOU)
 
-**Email:** houhackathon.cqp@gmail.com
+**Email:** thocodeanhquan@gmail.com
 
 **GitHub Organization:** [@HouHackathon-CQP](https://github.com/HouHackathon-CQP)
 
@@ -925,33 +851,10 @@ Dự án này sử dụng dữ liệu và công nghệ từ:
 - **MapLibre** - Open-source mapping library
 - **SUMO** (Simulation of Urban MObility) - Traffic simulation
 - **Báo Hà Nội Mới** - RSS news feed
+- **Google Gemini** - AI analysis và insights
+- **Groq** - AI analysis và insights (fallback)
 
 
-
----
-
-## 🚀 Những tính năng chúng tôi tâm đắc
-
-### 👥 1. Dành cho Người dân (The Citizen) - Người bạn đồng hành
-* **🌤 Dự báo thời tiết & AQI "siêu cục bộ":** Không chỉ báo chung chung cho cả Hà Nội, AI của chúng tôi cố gắng dự báo chi tiết theo khu vực bạn sống trong 24h-48h tới. Hệ thống sẽ đưa ra lời khuyên thiết thực: *"Chiều nay nên chạy bộ công viên"* hay *"Sáng mai ra đường nhớ đeo khẩu trang N95"*.
-* **🌳 Bản đồ "Lối đi xanh":** Thay vì chỉ tìm đường ngắn nhất, GreenMap gợi ý lộ trình "trong lành" nhất: có chỉ số AQI thấp, nhiều cây xanh che phủ, hoặc đi qua các trạm sạc xe điện và điểm "nghỉ mát".
-* **📢 Mạng xã hội môi trường:** Thấy một bãi rác tự phát? Một cống nước đen ngòm? Chụp ảnh và báo cáo ngay trên app (Report). Cộng đồng sẽ biết để tránh, và cơ quan chức năng sẽ có dữ liệu để xử lý.
-* **🏆 Gamification - Sống xanh cũng cần vui:** Mỗi bước chân đi bộ, mỗi lần đi xe đạp thay vì xe máy, bạn đều được tích điểm. Điểm này dùng để đổi quà hoặc thăng hạng "Hiệp sĩ xanh" trên bảng xếp hạng người dùng.
-
-### 👨‍💼 2. Dành cho Quản trị (The Admin) - Cái nhìn toàn cảnh
-* **Dashboard thời gian thực:** Giám sát "sức khỏe" của hệ thống cảm biến, lưu lượng truy cập và trạng thái server.
-* **Kiểm duyệt nội dung:** Công cụ xác thực các báo cáo từ người dân để đảm bảo dữ liệu trên bản đồ là chính xác và văn minh (loại bỏ spam/fake news).
-* **Phân tích dữ liệu:** Xuất các báo cáo xu hướng ô nhiễm theo tháng/quý để phục vụ nghiên cứu hoặc gửi tới các cơ quan chức năng.
-
----
-
-## 🔮 Tương lai chúng tôi hướng đến
-
-Dự án này không dừng lại ở khuôn khổ một cuộc thi hay một bài tập lớn. Chúng tôi mơ lớn hơn cho cộng đồng:
-
-1.  **Open API Initiative:** Mở cổng kết nối dữ liệu miễn phí. Các startup khác, sinh viên nghiên cứu khoa học có thể dùng dữ liệu sạch của GreenMap để phát triển ứng dụng của riêng họ.
-2.  **IoT Everywhere:** Kết nối với các thiết bị cảm biến vật lý giá rẻ (Arduino/ESP32) do chính cộng đồng lắp đặt tại ban công nhà họ, tạo nên mạng lưới giám sát dày đặc đến từng ngõ ngách (Crowdsourcing Data).
-3.  **Vươn xa hơn:** Mang mô hình GreenMap đến Đà Nẵng, TP.HCM và Huế - những thành phố cũng đang khao khát giữ gìn màu xanh du lịch và sức khỏe người dân.
 
 ---
 
@@ -962,21 +865,21 @@ Chúng tôi là những sinh viên công nghệ, code bằng đam mê và mang t
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/Quan03082004">
+      <a href="https://github.com/kedokato-dev">
         <img src="https://avatars.githubusercontent.com/u/125746822?v=4" width="120px;" style="border-radius: 50%"/><br>
         <sub><b>Trần Anh Quân</b></sub>
       </a><br>
       <small><i>Team Lead</i></small>
     </td>
     <td align="center">
-      <a href="https://github.com/ChienTran16">
+      <a href="https://github.com/blueMonkey23">
         <img src="https://avatars.githubusercontent.com/u/168514215?v=4" width="120px;" style="border-radius: 50%"/><br>
         <sub><b>Trần Trọng Chiến</b></sub>
       </a><br>
       <small><i>Backend Specialist & System Architect</i></small>
     </td>
     <td align="center">
-      <a href="https://github.com/haphuong21">
+      <a href="https://github.com/ourstorycomic">
         <img src="https://avatars.githubusercontent.com/u/100331812?v=4" width="120px;" style="border-radius: 50%"/><br>
         <sub><b>Nguyễn Hà Phương</b></sub>
       </a><br>
