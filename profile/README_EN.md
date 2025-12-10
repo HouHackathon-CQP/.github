@@ -14,6 +14,8 @@
 
 <div align="center">
 
+<img src="assets/logo.png" alt="GreenMap Logo" width="200"/>
+
 ![GreenMap Banner](https://img.shields.io/badge/🌿_GreenMap_Hanoi-Breathing_Life_into_the_Capital-2ea44f?style=for-the-badge)
 
 # Smart Green Map Platform
@@ -67,58 +69,11 @@ GreenMap provides a comprehensive integrated platform with 3 main pillars:
 
 GreenMap is built on a **Hybrid Architecture** model combining static processing and real-time data streaming:
 
-```mermaid
-graph TB
-    subgraph "🌐 Data Sources Layer"
-        A1[🗺️ OpenStreetMap<br/>Parks, Charging Stations]
-        A2[🌫️ OpenAQ API<br/>Air Quality Data]
-        A3[🌤️ Weather API<br/>Temperature, Humidity]
-        A4[🚗 SUMO Traffic<br/>Simulation Data]
-    end
-    
-    subgraph "⚙️ Backend Processing Layer"
-        B1[FastAPI Server<br/>REST API Endpoints]
-        B2[Orion-LD Broker<br/>NGSI-LD Context]
-        B3[Background Workers<br/>AQI & Weather Agents]
-        B4[🤖 AI Engine<br/>Gemini & Groq]
-    end
-    
-    subgraph "💾 Data Storage Layer"
-        D1[(PostgreSQL<br/>+ PostGIS)]
-        D2[(MongoDB<br/>NGSI-LD)]
-    end
-    
-    subgraph "🖥️ Presentation Layer"
-        C1[💻 Web Dashboard<br/>React + MapLibre]
-        C2[📱 Mobile App<br/>Kotlin + Compose]
-    end
-    
-    A1 & A2 & A3 & A4 -->|Collect Data| B3
-    B3 -->|Process & Transform| B1
-    B3 -.->|Real-time Sync| B2
-    B1 -->|Store Static Data| D1
-    B2 -->|Store Dynamic Data| D2
-    D1 & D2 -->|Query Data| B1
-    D1 & D2 -->|Weather + AQI Data| B4
-    B4 -->|AI Insights| B1
-    B1 -->|JSON API| C1 & C2
-    
-    style A1 fill:#E74C3C,stroke:#C0392B,stroke-width:2px,color:#fff
-    style A2 fill:#E67E22,stroke:#D35400,stroke-width:2px,color:#fff
-    style A3 fill:#F39C12,stroke:#E67E22,stroke-width:2px,color:#fff
-    style A4 fill:#3498DB,stroke:#2980B9,stroke-width:2px,color:#fff
-    
-    style B1 fill:#1ABC9C,stroke:#16A085,stroke-width:2px,color:#fff
-    style B2 fill:#2ECC71,stroke:#27AE60,stroke-width:2px,color:#fff
-    style B3 fill:#3498DB,stroke:#2980B9,stroke-width:2px,color:#fff
-    style B4 fill:#FF6B6B,stroke:#EE5A52,stroke-width:2px,color:#fff
-    
-    style D1 fill:#9B59B6,stroke:#8E44AD,stroke-width:2px,color:#fff
-    style D2 fill:#8E44AD,stroke:#7D3C98,stroke-width:2px,color:#fff
-    
-    style C1 fill:#E91E63,stroke:#C2185B,stroke-width:2px,color:#fff
-    style C2 fill:#FF5722,stroke:#E64A19,stroke-width:2px,color:#fff
-```
+<div align="center">
+
+<img src="assets/system architecture.png" alt="GreenMap System Architecture" width="100%"/>
+
+</div>
 
 ### 🔑 Unique Features
 
