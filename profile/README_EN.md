@@ -326,7 +326,7 @@ Smart analysis with Google Gemini and Groq:
 - 🔗 Direct links to original articles
 
 **Backend (news.py):**
-- 📡 Endpoint: `GET /api/v1/news/hanoimoi?limit=20`
+- 📡 Endpoint: `GET /news/hanoimoi?limit=20`
 - 🔄 Parse RSS feed from Hanoi Moi
 - ⚡ In-memory cache for optimized performance
 
@@ -346,8 +346,8 @@ Smart analysis with Google Gemini and Groq:
   - 🔴 Red (80-100%): Congested
 
 **Backend (traffic.py):**
-- 🗺️ Endpoint: `GET /api/v1/traffic/segments` (GeoJSON map)
-- 📊 Endpoint: `GET /api/v1/traffic/live` (real-time status)
+- 🗺️ Endpoint: `GET /traffic/segments` (GeoJSON map)
+- 📊 Endpoint: `GET /traffic/live` (real-time status)
 - 💾 Data stored in PostgreSQL with PostGIS
 - 🔄 Calculate density based on vehicle count
 
@@ -367,8 +367,8 @@ Smart analysis with Google Gemini and Groq:
 - 🔄 Auto-switch when one provider fails
 
 **Backend (ai.py):**
-- 🤖 Endpoint: `POST /api/v1/ai/weather-insights?lat=21.0285&lon=105.8542`
-- 📊 Endpoint: `GET /api/v1/ai/weather-insights/history?limit=10`
+- 🤖 Endpoint: `POST /ai/weather-insights?lat=21.0285&lon=105.8542`
+- 📊 Endpoint: `GET /ai/weather-insights/history?limit=10`
 - 💾 Save AI report + context to database
 - 🇻🇳 Output fully in Vietnamese
 
@@ -389,12 +389,12 @@ Smart analysis with Google Gemini and Groq:
 > Send real-time notifications to mobile app via Firebase Cloud Messaging
 
 **Backend (notifications.py):**
-- 📤 Endpoint: `POST /api/v1/notifications/send` (send to specific device tokens)
-- 📢 Endpoint: `POST /api/v1/notifications/send/topic` (send to topic)
-- 📜 Endpoint: `GET /api/v1/notifications/history` (view history)
-- 📱 Endpoint: `GET /api/v1/notifications/tokens` (list device tokens)
-- 🔑 Endpoint: `POST /api/v1/notifications/register` (register device token)
-- 🧹 Endpoint: `DELETE /api/v1/notifications/cleanup` (remove old tokens)
+- 📤 Endpoint: `POST /notifications/send` (send to specific device tokens)
+- 📢 Endpoint: `POST /notifications/send/topic` (send to topic)
+- 📜 Endpoint: `GET /notifications/history` (view history)
+- 📱 Endpoint: `GET /notifications/tokens` (list device tokens)
+- 🔑 Endpoint: `POST /notifications/register` (register device token)
+- 🧹 Endpoint: `DELETE /notifications/cleanup` (remove old tokens)
 
 **Frontend (Notification.jsx):**
 - 📝 **Send Tab**: Send notification to specific users

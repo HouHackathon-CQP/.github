@@ -336,7 +336,7 @@ Phân tích thông minh với Google Gemini và Groq:
 - 🔗 Link trực tiếp đến bài viết gốc
 
 **Backend (news.py):**
-- 📡 Endpoint: `GET /api/v1/news/hanoimoi?limit=20`
+- 📡 Endpoint: `GET /news/hanoimoi?limit=20`
 - 🔄 Parse RSS feed từ Hà Nội Mới
 - ⚡ Cache trong memory để tối ưu performance
 
@@ -356,8 +356,8 @@ Phân tích thông minh với Google Gemini và Groq:
   - 🔴 Red (80-100%): Tắc nghẽn
 
 **Backend (traffic.py):**
-- 🗺️ Endpoint: `GET /api/v1/traffic/segments` (GeoJSON map)
-- 📊 Endpoint: `GET /api/v1/traffic/live` (real-time status)
+- 🗺️ Endpoint: `GET /traffic/segments` (GeoJSON map)
+- 📊 Endpoint: `GET /traffic/live` (real-time status)
 - 💾 Dữ liệu lưu trong PostgreSQL với PostGIS
 - 🔄 Tính toán mật độ dựa trên vehicle count
 
@@ -377,8 +377,8 @@ Phân tích thông minh với Google Gemini và Groq:
 - 🔄 Auto-switch khi một provider fail
 
 **Backend (ai.py):**
-- 🤖 Endpoint: `POST /api/v1/ai/weather-insights?lat=21.0285&lon=105.8542`
-- 📊 Endpoint: `GET /api/v1/ai/weather-insights/history?limit=10`
+- 🤖 Endpoint: `POST /ai/weather-insights?lat=21.0285&lon=105.8542`
+- 📊 Endpoint: `GET /ai/weather-insights/history?limit=10`
 - 💾 Lưu AI report + context vào database
 - 🇻🇳 Output hoàn toàn bằng tiếng Việt
 
@@ -399,12 +399,12 @@ Phân tích thông minh với Google Gemini và Groq:
 > Gửi thông báo real-time đến mobile app qua Firebase Cloud Messaging
 
 **Backend (notifications.py):**
-- 📤 Endpoint: `POST /api/v1/notifications/send` (gửi đến device tokens cụ thể)
-- 📢 Endpoint: `POST /api/v1/notifications/send/topic` (gửi đến topic)
-- 📜 Endpoint: `GET /api/v1/notifications/history` (xem lịch sử)
-- 📱 Endpoint: `GET /api/v1/notifications/tokens` (danh sách device tokens)
-- 🔑 Endpoint: `POST /api/v1/notifications/register` (đăng ký device token)
-- 🧹 Endpoint: `DELETE /api/v1/notifications/cleanup` (xóa token cũ)
+- 📤 Endpoint: `POST /notifications/send` (gửi đến device tokens cụ thể)
+- 📢 Endpoint: `POST /notifications/send/topic` (gửi đến topic)
+- 📜 Endpoint: `GET /notifications/history` (xem lịch sử)
+- 📱 Endpoint: `GET /notifications/tokens` (danh sách device tokens)
+- 🔑 Endpoint: `POST /notifications/register` (đăng ký device token)
+- 🧹 Endpoint: `DELETE /notifications/cleanup` (xóa token cũ)
 
 **Frontend (Notification.jsx):**
 - 📝 **Send Tab**: Gửi notification đến user cụ thể
