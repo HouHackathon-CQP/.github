@@ -36,6 +36,8 @@
 
 **Minh bạch hóa** môi trường đô thị | **Định hướng** lối sống xanh | **Kết nối** sức mạnh cộng đồng
 
+**Trang web giới thiệu dự án:** https://greenmap.myhou.io.vn/
+
 </div>
 
 ---
