@@ -71,11 +71,8 @@ GreenMap is built on a **Hybrid Architecture** model combining static processing
 
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/system architecture.png">
-  <source media="(prefers-color-scheme: light)" srcset="assets/system architecture white.png">
-  <img src="assets/system architecture.png" alt="GreenMap System Architecture" width="100%"/>
-</picture>
+<img src="assets/system architecture.png#gh-dark-mode-only" alt="GreenMap System Architecture" width="100%"/>
+<img src="assets/system architecture white.png#gh-light-mode-only" alt="GreenMap System Architecture" width="100%"/>
 
 </div>
 
