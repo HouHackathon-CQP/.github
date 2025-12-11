@@ -71,7 +71,11 @@ GreenMap được xây dựng theo mô hình **Hybrid Architecture** kết hợp
 
 <div align="center">
 
-<img src="assets/system architecture.png" alt="GreenMap System Architecture" width="100%"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/system architecture.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/system architecture white.png">
+  <img src="assets/system architecture.png" alt="GreenMap System Architecture" width="100%"/>
+</picture>
 
 </div>
 
@@ -140,6 +144,10 @@ Phân tích thông minh với Google Gemini và Groq:
 - 🔄 Orion-LD Context Broker integration
 - 🤖 AI weather/AQI insights (Gemini + Groq)
 - 📊 AI analysis history & context storage
+- 📰 RSS news feed (Hà Nội Mới environment)
+- 🚗 Real-time traffic map (Kaggle dataset + SUMO)
+- 🔔 Push notifications via Firebase (FCM)
+- 📱 Device token management (iOS/Android)
 
 </td>
 <td width="40%">
@@ -156,11 +164,17 @@ Phân tích thông minh với Google Gemini và Groq:
 
 **Status:** ✅ Production Ready
 
-**API Endpoints:** 27+
+**API Endpoints:** 35+
 
 **Auto-sync:** Every 15-30 min
 
 **AI Providers:** Gemini & Groq
+
+**Push Notifications:** Firebase FCM
+
+**News Source:** RSS Hà Nội Mới
+
+**Traffic Data:** Kaggle + SUMO
 
 </td>
 </tr>
@@ -185,8 +199,11 @@ Phân tích thông minh với Google Gemini và Groq:
 ```
 
 **Chức Năng Chính:**
-- 🗺️ 7-layer interactive map (AQI, Traffic, Parks, EV, etc.)
+- 🗺️ 8-layer interactive map (AQI, Weather, Traffic, Parks, EV, Bikes, Reports, News)
 - 📊 Real-time KPI dashboard
+- 📰 News Feed page (RSS từ Hà Nội Mới)
+- 🔔 Push Notification Center (gửi thông báo, xem lịch sử)
+- 🤖 AI Insights generation (Gemini/Groq integration)
 - ✅ Report approval system
 - 👥 User management (ADMIN/CITIZEN roles)
 - 📈 Analytics & trends visualization
@@ -203,9 +220,13 @@ Phân tích thông minh với Google Gemini và Groq:
 
 **Status:** ✅ Production Ready
 
-**Map Layers:** 7
+**Map Layers:** 8 (including Traffic)
+
+**Pages:** 11 (Dashboard, Map, Analytics, Reports, Users, Settings, News, Notifications, etc.)
 
 **Charts:** 5+ types
+
+**Features:** News Feed, Push Notifications, AI Insights
 
 </td>
 </tr>
@@ -281,6 +302,7 @@ Phân tích thông minh với Google Gemini và Groq:
 - 🚴 Bike rental points (50+)
 - 🏛️ Tourist attractions (150+)
 - 🚗 Traffic simulation data (SUMO)
+- 🚦 Real traffic data (Kaggle - Ngã Tư Sở Intersection)
 - 📊 Historical AQI/Weather data
 
 </td>
@@ -305,6 +327,104 @@ Phân tích thông minh với Google Gemini và Groq:
 
 ---
 
+## 🌟 Tính Năng Mới Nổi Bật
+
+### 📰 News Feed - Tin Tức Môi Trường
+> Cập nhật tin tức môi trường từ báo **Hà Nội Mới** qua RSS feed
+
+**Frontend (NewsFeed.jsx):**
+- 📱 Giao diện hiện đại với Featured News, Hot News, và Latest News
+- 🔍 Tìm kiếm và filter theo từ khóa
+- 🖼️ Hiển thị ảnh bài viết với fallback image
+- 🔗 Link trực tiếp đến bài viết gốc
+
+**Backend (news.py):**
+- 📡 Endpoint: `GET /api/v1/news/hanoimoi?limit=20`
+- 🔄 Parse RSS feed từ Hà Nội Mới
+- ⚡ Cache trong memory để tối ưu performance
+
+---
+
+### 🚗 Real-time Traffic Map - Bản Đồ Giao Thông
+> Hiển thị mật độ giao thông thời gian thực từ dữ liệu thực tế
+
+**Nguồn Dữ Liệu:**
+- 📊 **Kaggle Dataset**: [Ngã Tư Sở Intersection Traffic](https://www.kaggle.com/datasets/egglover05/nga-tu-so-intersection-traffic-dataset)
+- 🚦 Dữ liệu thực tế từ giao lộ Ngã Tư Sở, Hà Nội
+- ⏱️ Cập nhật mỗi 10 giây (simulation loop 1 giờ)
+- 🎨 Color-coded theo mức độ tắc nghẽn:
+  - 🟢 Green (0-30%): Thông thoáng
+  - 🟡 Yellow (30-60%): Trung bình
+  - 🟠 Orange (60-80%): Đông đúc
+  - 🔴 Red (80-100%): Tắc nghẽn
+
+**Backend (traffic.py):**
+- 🗺️ Endpoint: `GET /api/v1/traffic/segments` (GeoJSON map)
+- 📊 Endpoint: `GET /api/v1/traffic/live` (real-time status)
+- 💾 Dữ liệu lưu trong PostgreSQL với PostGIS
+- 🔄 Tính toán mật độ dựa trên vehicle count
+
+**Frontend (trafficService.js + Map):**
+- 🗺️ Hiển thị lớp traffic trên MapLibre GL
+- 💾 Cache 5 phút trong localStorage
+- 🎨 Dynamic styling theo traffic density
+
+---
+
+### 🤖 AI Weather Insights - Phân Tích AI
+> Phân tích thời tiết 24h/7 ngày + AQI bằng AI, đưa ra lời khuyên
+
+**AI Providers:**
+- 🧠 **Google Gemini** (primary): gemini-1.5-flash
+- ⚡ **Groq** (fallback): llama-3.3-70b-versatile
+- 🔄 Auto-switch khi một provider fail
+
+**Backend (ai.py):**
+- 🤖 Endpoint: `POST /api/v1/ai/weather-insights?lat=21.0285&lon=105.8542`
+- 📊 Endpoint: `GET /api/v1/ai/weather-insights/history?limit=10`
+- 💾 Lưu AI report + context vào database
+- 🇻🇳 Output hoàn toàn bằng tiếng Việt
+
+**Frontend (Notification.jsx):**
+- ✨ Button "Tạo AI Insights" với Sparkles icon
+- 📝 Hiển thị phân tích AI trong modal
+- 📊 View lịch sử phân tích trước đó
+
+**Nội dung phân tích:**
+- 🌤️ Tổng quan thời tiết 24h và 7 ngày
+- 🌫️ Chất lượng không khí (AQI, PM2.5)
+- 💡 Lời khuyên: Ra ngoài? Mang theo gì? Hoạt động nào?
+- ⚠️ Cảnh báo nếu có điều kiện xấu
+
+---
+
+### 🔔 Push Notifications - Thông Báo Đẩy
+> Gửi thông báo real-time đến mobile app qua Firebase Cloud Messaging
+
+**Backend (notifications.py):**
+- 📤 Endpoint: `POST /api/v1/notifications/send` (gửi đến device tokens cụ thể)
+- 📢 Endpoint: `POST /api/v1/notifications/send/topic` (gửi đến topic)
+- 📜 Endpoint: `GET /api/v1/notifications/history` (xem lịch sử)
+- 📱 Endpoint: `GET /api/v1/notifications/tokens` (danh sách device tokens)
+- 🔑 Endpoint: `POST /api/v1/notifications/register` (đăng ký device token)
+- 🧹 Endpoint: `DELETE /api/v1/notifications/cleanup` (xóa token cũ)
+
+**Frontend (Notification.jsx):**
+- 📝 **Send Tab**: Gửi notification đến user cụ thể
+- 📢 **Topic Tab**: Gửi broadcast đến topic (weather_alerts, pollution_alerts)
+- ✨ **AI Insights Tab**: Tạo nội dung notification bằng AI
+- 📊 **History Tab**: Xem lịch sử notifications đã gửi
+- 📱 **Device Tokens Tab**: Quản lý device tokens (view, delete)
+
+**Features:**
+- 🎯 Targeted notifications (chọn users cụ thể)
+- 📢 Topic-based broadcasting
+- 🤖 AI-generated notification content
+- 📊 Analytics (success rate, failed devices)
+- 🔔 Firebase multi-device support (iOS/Android)
+
+---
+
 ## ⚡ Tính Năng Chính
 
 <div align="center">
@@ -318,12 +438,13 @@ Phân tích thông minh với Google Gemini và Groq:
 | 🌫️ **AQI Real-time** | Theo dõi chất lượng không khí (PM2.5, PM10, NO2, O3) theo vị trí GPS |
 | 🌤️ **Dự Báo Thời Tiết** | Nhiệt độ, độ ẩm, lượng mưa, gió - cập nhật 15 phút/lần |
 | 🤖 **AI Insights** | Phân tích thời tiết & AQI bằng AI (Gemini/Groq), đưa ra lời khuyên cá nhân hóa |
-| 🚗 **Traffic Monitor** | Mật độ giao thông real-time từ SUMO simulation |
+| 🚗 **Traffic Monitor** | Mật độ giao thông real-time từ Kaggle dataset (Ngã Tư Sở) + mô phỏng SUMO |
 | ⚡ **EV Charging** | Tìm trạm sạc xe điện gần nhất + trạng thái available |
 | 🚴 **Bike Sharing** | Vị trí điểm thuê xe đạp công cộng |
 | 🏞️ **Điểm Xanh** | Công viên, khu du lịch, điểm check-in xanh |
 | 📢 **Community Report** | Báo cáo điểm ô nhiễm + upload ảnh hiện trường |
-| 📰 **Tin Tức Xanh** | RSS feed từ báo Hà Nội Mới về môi trường |
+| 📰 **Tin Tức Môi Trường** | RSS feed từ báo Hà Nội Mới, cập nhật tin tức môi trường real-time |
+| 🔔 **Push Notifications** | Nhận thông báo cảnh báo ô nhiễm, thời tiết xấu qua Firebase Cloud Messaging |
 
 <div align="center">
 
@@ -334,10 +455,12 @@ Phân tích thông minh với Google Gemini và Groq:
 | Tính Năng | Mô Tả |
 |:----------|:------|
 | 📊 **KPI Dashboard** | Overview tổng quan: sensors, users, reports, alerts |
-| 🗺️ **Multi-layer Map** | 7 lớp: AQI, Weather, Traffic, EV, Bike, Park, Report |
-| 📈 **Analytics** | Biểu đồ AQI theo quận, so sánh trends, heatmap |
-| 🤖 **AI Analytics** | Xem lịch sử phân tích AI, context data, và insights |
-| ✅ **Report Management** | Duyệt/từ chối báo cáo từ cộng đồng |
+| 🗺️ **Multi-layer Map** | 8 lớp: AQI, Weather, Traffic (real-time), EV, Bike, Park, Report, News |
+| 📈 **Analytics** | Biểu đồ AQI theo quận, so sánh trends, heatmap, traffic flow |
+| 🤖 **AI Insights Dashboard** | Xem lịch sử phân tích AI, context data, tạo insights mới với Gemini/Groq |
+| 📰 **News Feed Management** | Xem và quản lý tin tức môi trường từ RSS Hà Nội Mới |
+| 🔔 **Push Notification Center** | Gửi thông báo đến user/topic, xem lịch sử, quản lý device tokens |
+| ✅ **Report Management** | Duyệt/từ chối báo cáo từ cộng đồng, theo dõi status |
 | 👥 **User Management** | CRUD users, phân quyền ADMIN/CITIZEN |
 | 🌳 **Green Infrastructure** | CRUD công viên, trạm sạc EV, điểm thuê xe đạp, du lịch |
 
@@ -353,6 +476,7 @@ graph LR
     B[🌫️ OpenAQ] -->|Air Quality| E
     C[🌤️ Weather API] -->|Meteorology| E
     D[🚗 SUMO] -->|Traffic Sim| E
+    K[📊 Kaggle Dataset] -->|Real Traffic| E
     F[📢 RSS Feed] -->|News| E
     G[👥 Users] -->|Reports| E
     
@@ -364,6 +488,7 @@ graph LR
     style B fill:#e67e22
     style C fill:#f39c12
     style D fill:#3498db
+    style K fill:#e91e63
     style F fill:#9b59b6
     style G fill:#1abc9c
     style E fill:#34495e,color:#fff
@@ -409,9 +534,16 @@ graph LR
 </tr>
 
 <tr>
+<td><b>Kaggle Dataset</b></td>
+<td>🚦 Ngã Tư Sở Traffic<br>📊 Real Intersection Data<br>🚗 Vehicle Patterns</td>
+<td>CSV Processing<br/>PostgreSQL Import</td>
+<td>Historical Data<br/>(10-second intervals)</td>
+</tr>
+
+<tr>
 <td><b>RSS News</b></td>
 <td>📰 Environmental News<br/>Hà Nội Mới</td>
-<td>RSS Parser</td>
+<td>RSS Parser<br/>feedparser</td>
 <td>🔄 Hourly</td>
 </tr>
 
@@ -521,6 +653,10 @@ shapely               # Geometric operations
 httpx                 # Async HTTP client
 python-jose[cryptography]  # JWT tokens
 bcrypt                # Password hashing
+feedparser            # RSS news parsing
+firebase-admin        # Push notifications (FCM)
+google-generativeai   # Gemini AI integration
+groq                  # Groq AI integration
 ```
 
 </details>
@@ -612,15 +748,94 @@ Railway/Vercel        # Deployment platforms
 Git Cliff             # Changelog automation
 ```
 
-### External APIs
+### External APIs & Datasets
 ```
 Overpass API          # OpenStreetMap queries
 OpenAQ API            # Air quality data
 Weather API           # Meteorological data
 SUMO                  # Traffic simulation
+Kaggle Dataset        # Ngã Tư Sở Intersection Traffic
+                      # https://www.kaggle.com/datasets/egglover05/nga-tu-so-intersection-traffic-dataset
+RSS Feed              # Báo Hà Nội Mới (Environment news)
+Google Gemini API     # AI weather/AQI analysis
+Groq API              # AI insights (fallback)
+Firebase FCM          # Push notifications
 ```
 
 </details>
+
+---
+
+## 🖼️ Giao Diện Web Dashboard
+
+<div align="center">
+
+### Một Số Hình Ảnh Từ Hệ Thống
+
+</div>
+
+<table>
+<tr>
+<td width="50%">
+
+#### 📊 Dashboard - Tổng Quan Hệ Thống
+<img src="assets/dashboard.jpg" alt="Dashboard" width="100%"/>
+
+> Theo dõi các chỉ số KPI quan trọng: số lượng sensors, users, reports và alerts trong thời gian thực.
+
+</td>
+<td width="50%">
+
+#### 🗺️ Interactive Map - Bản Đồ Tương Tác
+<img src="assets/map.jpg" alt="Map View" width="100%"/>
+
+> Bản đồ 8 lớp với AQI, Weather, Traffic, Parks, EV Charging, Bike Rental, Tourist Attractions và Community Reports.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 🔔 Notification Center - Trung Tâm Thông Báo
+<img src="assets/notification.jpg" alt="Notifications" width="100%"/>
+
+> Gửi push notifications đến mobile app qua Firebase Cloud Messaging, hỗ trợ targeted và topic-based notifications.
+
+</td>
+<td width="50%">
+
+#### 📢 Report Management - Quản Lý Báo Cáo
+<img src="assets/report.jpg" alt="Reports" width="100%"/>
+
+> Duyệt và quản lý báo cáo ô nhiễm từ cộng đồng với workflow PENDING → APPROVED/REJECTED.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 📍 Location Management - Quản Lý Địa Điểm
+<img src="assets/location.jpg" alt="Locations" width="100%"/>
+
+> CRUD công viên, trạm sạc EV, điểm thuê xe đạp và điểm du lịch với tích hợp bản đồ PostGIS.
+
+</td>
+<td width="50%">
+
+#### 👥 User Management - Quản Lý Người Dùng
+<img src="assets/user.jpg" alt="Users" width="100%"/>
+
+> Quản lý users với phân quyền ADMIN/CITIZEN, JWT authentication và role-based access control.
+
+</td>
+</tr>
+</table>
+
+<div align="center">
+
+**✨ Giao diện được xây dựng với React 19, TailwindCSS, và MapLibre GL JS**
+
+</div>
 
 ---
 
@@ -634,7 +849,7 @@ GreenMap sử dụng **GitHub Actions** để tự động hóa toàn bộ quy t
 
 ```mermaid
 graph TB
-    A["👨‍💻 Developer<br/>Push to main"] --> B["⚙️ Setup Job<br/>GitHub Runner"]
+    A["👨‍💻 Developer<br/>Push to main"] --> B["⚙️ Setup Job<br/>GitHub Actions"]
     
     B --> C["📥 Checkout Code<br/>from main branch"]
     
@@ -969,6 +1184,12 @@ https://backend.myhou.io.vn/locations?location_type=BICYCLE_RENTAL&limit=100&ski
 https://backend.myhou.io.vn/locations?location_type=TOURIST_ATTRACTION&limit=100&skip=0&options=keyValues&raw=false
 ```
 
+### 🚗 Dữ Liệu Giao Thông
+
+```
+https://www.kaggle.com/datasets/egglover05/nga-tu-so-intersection-traffic-dataset
+```
+
 ### 📝 Tham Số Query
 
 | Tham số | Mô tả | Giá trị mặc định |
@@ -1178,9 +1399,11 @@ Dự án này sử dụng dữ liệu và công nghệ từ:
 - **Smart Data Models** - NGSI-LD context và schemas
 - **MapLibre** - Open-source mapping library
 - **SUMO** (Simulation of Urban MObility) - Traffic simulation
-- **Báo Hà Nội Mới** - RSS news feed
-- **Google Gemini** - AI analysis và insights
-- **Groq** - AI analysis và insights (fallback)
+- **Kaggle & egglover05** - [Ngã Tư Sở Intersection Traffic Dataset](https://www.kaggle.com/datasets/egglover05/nga-tu-so-intersection-traffic-dataset)
+- **Báo Hà Nội Mới** - RSS news feed về môi trường
+- **Google Gemini** - AI weather/AQI analysis và insights
+- **Groq** - AI analysis và insights (fallback provider)
+- **Firebase** - Cloud Messaging cho push notifications
 
 
 

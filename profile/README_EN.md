@@ -71,7 +71,11 @@ GreenMap is built on a **Hybrid Architecture** model combining static processing
 
 <div align="center">
 
-<img src="assets/system architecture.png" alt="GreenMap System Architecture" width="100%"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/system architecture.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/system architecture white.png">
+  <img src="assets/system architecture.png" alt="GreenMap System Architecture" width="100%"/>
+</picture>
 
 </div>
 
@@ -140,6 +144,10 @@ Smart analysis with Google Gemini and Groq:
 - 🔄 Orion-LD Context Broker integration
 - 🤖 AI weather/AQI insights (Gemini + Groq)
 - 📊 AI analysis history & context storage
+- 📰 RSS news feed (Hanoi Moi environment)
+- 🚗 Real-time traffic map (Kaggle dataset + SUMO)
+- 🔔 Push notifications via Firebase (FCM)
+- 📱 Device token management (iOS/Android)
 
 </td>
 <td width="40%">
@@ -156,7 +164,7 @@ Smart analysis with Google Gemini and Groq:
 
 **Status:** ✅ Production Ready
 
-**API Endpoints:** 27+
+**API Endpoints:** 35+
 
 **Auto-sync:** Every 15-30 min
 
@@ -185,11 +193,14 @@ Smart analysis with Google Gemini and Groq:
 ```
 
 **Main Features:**
-- 🗺️ 7-layer interactive map (AQI, Traffic, Parks, EV, etc.)
+- 🗺️ 8-layer interactive map (AQI, Traffic, Parks, EV, News, etc.)
 - 📊 Real-time KPI dashboard
 - ✅ Report approval system
 - 👥 User management (ADMIN/CITIZEN roles)
 - 📈 Analytics & trends visualization
+- 📰 News feed viewer (Hanoi Moi RSS)
+- 🤖 AI insights interface (Gemini/Groq)
+- 🔔 Push notification center
 
 </td>
 <td width="40%">
@@ -203,9 +214,9 @@ Smart analysis with Google Gemini and Groq:
 
 **Status:** ✅ Production Ready
 
-**Map Layers:** 7
+**Map Layers:** 8
 
-**Charts:** 5+ types
+**Pages:** 11
 
 </td>
 </tr>
@@ -281,6 +292,7 @@ Smart analysis with Google Gemini and Groq:
 - 🚴 Bike rental points (50+)
 - 🏛️ Tourist attractions (150+)
 - 🚗 Traffic simulation data (SUMO)
+- 🚦 Real traffic data (Kaggle - Nga Tu So Intersection)
 - 📊 Historical AQI/Weather data
 
 </td>
@@ -305,6 +317,104 @@ Smart analysis with Google Gemini and Groq:
 
 ---
 
+## 🌟 New Featured Highlights
+
+### 📰 News Feed - Environmental News
+> Real-time environmental news from **Hanoi Moi** newspaper via RSS feed
+
+**Frontend (NewsFeed.jsx):**
+- 📱 Modern interface with Featured News, Hot News, and Latest News
+- 🔍 Search and filter by keywords
+- 🖼️ Display article images with fallback
+- 🔗 Direct links to original articles
+
+**Backend (news.py):**
+- 📡 Endpoint: `GET /api/v1/news/hanoimoi?limit=20`
+- 🔄 Parse RSS feed from Hanoi Moi
+- ⚡ In-memory cache for optimized performance
+
+---
+
+### 🚗 Real-time Traffic Map - Traffic Monitoring
+> Display real-time traffic density from actual data
+
+**Data Source:**
+- 📊 **Kaggle Dataset**: [Nga Tu So Intersection Traffic](https://www.kaggle.com/datasets/egglover05/nga-tu-so-intersection-traffic-dataset)
+- 🚦 Real data from Nga Tu So intersection, Hanoi
+- ⏱️ Updates every 10 seconds (1-hour simulation loop)
+- 🎨 Color-coded by congestion level:
+  - 🟢 Green (0-30%): Smooth
+  - 🟡 Yellow (30-60%): Moderate
+  - 🟠 Orange (60-80%): Busy
+  - 🔴 Red (80-100%): Congested
+
+**Backend (traffic.py):**
+- 🗺️ Endpoint: `GET /api/v1/traffic/segments` (GeoJSON map)
+- 📊 Endpoint: `GET /api/v1/traffic/live` (real-time status)
+- 💾 Data stored in PostgreSQL with PostGIS
+- 🔄 Calculate density based on vehicle count
+
+**Frontend (trafficService.js + Map):**
+- 🗺️ Display traffic layer on MapLibre GL
+- 💾 5-minute cache in localStorage
+- 🎨 Dynamic styling by traffic density
+
+---
+
+### 🤖 AI Weather Insights - AI Analysis
+> Analyze 24h/7-day weather + AQI with AI, provide recommendations
+
+**AI Providers:**
+- 🧠 **Google Gemini** (primary): gemini-1.5-flash
+- ⚡ **Groq** (fallback): llama-3.3-70b-versatile
+- 🔄 Auto-switch when one provider fails
+
+**Backend (ai.py):**
+- 🤖 Endpoint: `POST /api/v1/ai/weather-insights?lat=21.0285&lon=105.8542`
+- 📊 Endpoint: `GET /api/v1/ai/weather-insights/history?limit=10`
+- 💾 Save AI report + context to database
+- 🇻🇳 Output fully in Vietnamese
+
+**Frontend (Notification.jsx):**
+- ✨ "Generate AI Insights" button with Sparkles icon
+- 📝 Display AI analysis in modal
+- 📊 View previous analysis history
+
+**Analysis Content:**
+- 🌤️ 24h and 7-day weather overview
+- 🌫️ Air quality (AQI, PM2.5)
+- 💡 Recommendations: Go outside? Bring what? Which activities?
+- ⚠️ Warnings for poor conditions
+
+---
+
+### 🔔 Push Notifications - Push Alerts
+> Send real-time notifications to mobile app via Firebase Cloud Messaging
+
+**Backend (notifications.py):**
+- 📤 Endpoint: `POST /api/v1/notifications/send` (send to specific device tokens)
+- 📢 Endpoint: `POST /api/v1/notifications/send/topic` (send to topic)
+- 📜 Endpoint: `GET /api/v1/notifications/history` (view history)
+- 📱 Endpoint: `GET /api/v1/notifications/tokens` (list device tokens)
+- 🔑 Endpoint: `POST /api/v1/notifications/register` (register device token)
+- 🧹 Endpoint: `DELETE /api/v1/notifications/cleanup` (remove old tokens)
+
+**Frontend (Notification.jsx):**
+- 📝 **Send Tab**: Send notification to specific users
+- 📢 **Topic Tab**: Broadcast to topics (weather_alerts, pollution_alerts)
+- ✨ **AI Insights Tab**: Generate notification content with AI
+- 📊 **History Tab**: View sent notifications history
+- 📱 **Device Tokens Tab**: Manage device tokens (view, delete)
+
+**Features:**
+- 🎯 Targeted notifications (select specific users)
+- 📢 Topic-based broadcasting
+- 🤖 AI-generated notification content
+- 📊 Analytics (success rate, failed devices)
+- 🔔 Firebase multi-device support (iOS/Android)
+
+---
+
 ## ⚡ Key Features
 
 <div align="center">
@@ -318,12 +428,13 @@ Smart analysis with Google Gemini and Groq:
 | 🌫️ **AQI Real-time** | Track air quality (PM2.5, PM10, NO2, O3) by GPS location |
 | 🌤️ **Weather Forecast** | Temperature, humidity, rainfall, wind - updated every 15 mins |
 | 🤖 **AI Insights** | Weather & AQI analysis with AI (Gemini/Groq), personalized recommendations |
-| 🚗 **Traffic Monitor** | Real-time traffic density from SUMO simulation |
+| 🚗 **Traffic Monitor** | Real-time traffic density from Kaggle dataset (Nga Tu So) + SUMO simulation |
 | ⚡ **EV Charging** | Find nearest EV charging stations + availability status |
 | 🚴 **Bike Sharing** | Public bike rental point locations |
 | 🏞️ **Green Points** | Parks, tourism spots, green check-in points |
 | 📢 **Community Report** | Report pollution hotspots + upload on-site photos |
-| 📰 **Green News** | RSS feed from Hanoi Moi newspaper on environment |
+| 📰 **Environmental News** | RSS feed from Hanoi Moi newspaper, real-time environmental news updates |
+| 🔔 **Push Notifications** | Receive pollution alerts, bad weather warnings via Firebase Cloud Messaging |
 
 <div align="center">
 
@@ -334,13 +445,14 @@ Smart analysis with Google Gemini and Groq:
 | Feature | Description |
 |:--------|:------------|
 | 📊 **KPI Dashboard** | Overview: sensors, users, reports, alerts |
-| 🗺️ **Multi-layer Map** | 7 layers: AQI, Weather, Traffic, EV, Bike, Park, Report |
-| 📈 **Analytics** | AQI charts by district, trend comparison, heatmaps |
-| 🤖 **AI Analytics** | View AI analysis history, context data, and insights |
-| ✅ **Report Management** | Approve/reject community reports |
+| 🗺️ **Multi-layer Map** | 8 layers: AQI, Weather, Traffic (real-time), EV, Bike, Park, Report, News |
+| 📈 **Analytics** | AQI charts by district, trend comparison, heatmaps, traffic flow |
+| 🤖 **AI Insights Dashboard** | View AI analysis history, context data, create new insights with Gemini/Groq |
+| 📰 **News Feed Management** | View and manage environmental news from Hanoi Moi RSS |
+| 🔔 **Push Notification Center** | Send notifications to users/topics, view history, manage device tokens |
+| ✅ **Report Management** | Approve/reject community reports, track status |
 | 👥 **User Management** | CRUD users, role assignment ADMIN/CITIZEN |
-| 🌳 **Green Infrastructure** | CRUD parks, EV stations, bike rentals, tourism |
-| 📥 **Export Data** | Export CSV/PDF reports for research |
+| 🌳 **Green Infrastructure** | CRUD parks, EV charging stations, bike rental points, tourism |
 
 ---
 
@@ -354,6 +466,7 @@ graph LR
     B[🌫️ OpenAQ] -->|Air Quality| E
     C[🌤️ Weather API] -->|Meteorology| E
     D[🚗 SUMO] -->|Traffic Sim| E
+    K[📊 Kaggle Dataset] -->|Real Traffic| E
     F[📢 RSS Feed] -->|News| E
     G[👥 Users] -->|Reports| E
     
@@ -365,6 +478,7 @@ graph LR
     style B fill:#e67e22
     style C fill:#f39c12
     style D fill:#3498db
+    style K fill:#e91e63
     style F fill:#9b59b6
     style G fill:#1abc9c
     style E fill:#34495e,color:#fff
@@ -407,6 +521,13 @@ graph LR
 <td>🚗 Traffic Flow<br>🚦 Congestion<br>📉 Vehicle Count</td>
 <td>Simulation Output<br/>JSON Export</td>
 <td>Simulation-based</td>
+</tr>
+
+<tr>
+<td><b>Kaggle Dataset</b></td>
+<td>🚦 Real Traffic Data<br>📊 Nga Tu So Intersection<br>🚗 Vehicle Counts</td>
+<td>Kaggle API<br/>CSV Dataset</td>
+<td>🔄 10-second loop</td>
 </tr>
 
 <tr>
@@ -507,6 +628,10 @@ shapely               # Geometric operations
 httpx                 # Async HTTP client
 python-jose[cryptography]  # JWT tokens
 bcrypt                # Password hashing
+feedparser            # RSS feed parsing
+firebase-admin        # Firebase Cloud Messaging
+google-generativeai   # Google Gemini API
+groq                  # Groq AI API
 ```
 
 </details>
@@ -598,15 +723,92 @@ Railway/Vercel        # Deployment platforms
 Git Cliff             # Changelog automation
 ```
 
-### External APIs
+### External APIs & Datasets
 ```
 Overpass API          # OpenStreetMap queries
 OpenAQ API            # Air quality data
 Weather API           # Meteorological data
 SUMO                  # Traffic simulation
+Kaggle API            # Real traffic dataset (Nga Tu So)
+Google Gemini API     # AI analysis (primary)
+Groq API              # AI analysis (fallback)
+Firebase Cloud Messaging  # Push notifications
 ```
 
 </details>
+
+---
+
+## 🖼️ Web Dashboard Interface
+
+<div align="center">
+
+### Screenshots From The System
+
+</div>
+
+<table>
+<tr>
+<td width="50%">
+
+#### 📊 Dashboard - System Overview
+<img src="assets/dashboard.jpg" alt="Dashboard" width="100%"/>
+
+> Monitor key KPIs: number of sensors, users, reports and alerts in real-time.
+
+</td>
+<td width="50%">
+
+#### 🗺️ Interactive Map - Map View
+<img src="assets/map.jpg" alt="Map View" width="100%"/>
+
+> 8-layer map with AQI, Weather, Traffic, Parks, EV Charging, Bike Rental, Tourist Attractions and Community Reports.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 🔔 Notification Center - Push Notifications
+<img src="assets/notification.jpg" alt="Notifications" width="100%"/>
+
+> Send push notifications to mobile app via Firebase Cloud Messaging, supporting targeted and topic-based notifications.
+
+</td>
+<td width="50%">
+
+#### 📢 Report Management - Community Reports
+<img src="assets/report.jpg" alt="Reports" width="100%"/>
+
+> Review and manage pollution reports from community with PENDING → APPROVED/REJECTED workflow.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 📍 Location Management - Green Infrastructure
+<img src="assets/location.jpg" alt="Locations" width="100%"/>
+
+> CRUD parks, EV charging stations, bike rental points and tourist attractions with PostGIS map integration.
+
+</td>
+<td width="50%">
+
+#### 👥 User Management - Access Control
+<img src="assets/user.jpg" alt="Users" width="100%"/>
+
+> Manage users with ADMIN/CITIZEN roles, JWT authentication and role-based access control.
+
+</td>
+</tr>
+</table>
+
+<div align="center">
+
+**✨ Interface built with React 19, TailwindCSS, and MapLibre GL JS**
+
+</div>
 
 ---
 
@@ -620,7 +822,7 @@ GreenMap uses **GitHub Actions** to automate the entire development, testing, an
 
 ```mermaid
 graph TB
-    A["👨‍💻 Developer<br/>Push to main"] --> B["⚙️ Setup Job<br/>GitHub Runner"]
+    A["👨‍💻 Developer<br/>Push to main"] --> B["⚙️ Setup Job<br/>GitHub Actions"]
     
     B --> C["📥 Checkout Code<br/>from main branch"]
     
@@ -871,7 +1073,7 @@ jobs:
 ### 📊 Workflow Statistics
 
 **Deployment Environment:**
-- **Runner:** GitHub-hosted (Ubuntu 24.04 LTS)
+- **Platform:** GitHub Actions (Ubuntu 24.04 LTS)
 - **Runner Version:** 2.329.0
 - **Node.js:** v22-alpine (Docker)
 - **Docker Engine:** Latest with BuildKit
@@ -957,6 +1159,14 @@ https://backend.myhou.io.vn/locations?location_type=BICYCLE_RENTAL&limit=100&ski
 ```
 https://backend.myhou.io.vn/locations?location_type=TOURIST_ATTRACTION&limit=100&skip=0&options=keyValues&raw=false
 ```
+
+### 🚗 Traffic Data
+
+**Kaggle Dataset - Real Traffic Data:**
+- 📊 Dataset: [Nga Tu So Intersection Traffic](https://www.kaggle.com/datasets/egglover05/nga-tu-so-intersection-traffic-dataset)
+- 🚦 Real vehicle count data from Nga Tu So intersection, Hanoi
+- 📈 Updated every 10 seconds (simulation loop)
+- 🎨 Includes traffic density and congestion levels
 
 ### 📝 Query Parameters
 
@@ -1060,9 +1270,11 @@ This project uses data and technology from:
 - **Smart Data Models** - NGSI-LD context and schemas
 - **MapLibre** - Open-source mapping library
 - **SUMO** (Simulation of Urban MObility) - Traffic simulation
+- **Kaggle & egglover05** - Nga Tu So Intersection traffic dataset
 - **Hanoi Moi Newspaper** - RSS news feed
-- **Google Gemini** - AI analysis and insights
-- **Groq** - AI analysis and insights (fallback)
+- **Google Gemini** - AI weather & AQI analysis
+- **Groq** - AI analysis (fallback provider)
+- **Firebase Cloud Messaging** - Push notifications
 
 ---
 
